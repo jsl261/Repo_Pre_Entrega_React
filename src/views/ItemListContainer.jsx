@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 function ItemListContainer({ greeting }) {
   const [productos, setProductos] = useState([
-    { id: 1, nombre: 'Amigurumi Conejito', precio: 15.00, img: '/images/conejito.jpg', stock: 5, cantidad: 1 },
-    { id: 2, nombre: 'Bufanda Texturada', precio: 22.00, img: '/images/bufanda.jpg', stock: 4, cantidad: 1 },
-    { id: 3, nombre: 'Atrapasueños Crochet', precio: 12.00, img: '/images/atrapasuenos.jpg', stock: 10, cantidad: 1 },
+    { id: 1, nombre: 'Amigurumi Conejito', precio: 15.00, img: '/images/Imagen1.jpeg', stock: 5, cantidad: 1 },
+    { id: 2, nombre: 'Bufanda Texturada', precio: 22.00, img: '/images/Imagen2.jpeg', stock: 4, cantidad: 1 },
+    { id: 3, nombre: 'Atrapasueños Crochet', precio: 12.00, img: '/images/Imagen3.jpeg', stock: 10, cantidad: 1 },
   ]);
 
   const sumarCantidad = (id) => {
