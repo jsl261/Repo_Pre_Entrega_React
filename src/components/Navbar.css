@@ -1,0 +1,183 @@
+/* Cabecera principal fija en la parte superior */
+.main-header {
+  width: 100%;
+  background-color: #c2185b;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Barra de navegación con espacio de resguardo a los lados */
+.custom-navbar {
+  width: 100%;
+  max-width: 1350px;
+  margin: 0 auto;
+  background-color: #c2185b;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.7rem 1.5rem; /* Padding lateral equilibrado */
+  box-sizing: border-box;
+  color: #ffffff;
+  font-family: system-ui, -apple-system, sans-serif;
+  gap: 1rem;
+}
+
+/* Lado izquierdo (Logo y Menú) */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+  flex-wrap: nowrap;
+}
+
+.navbar-brand {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffe4e6;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.navbar-nav {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.nav-link {
+  color: #fbcfe8;
+  text-decoration: none;
+  background: none;
+  border: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.4rem 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Menú desplegable (Categorías) */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 130%;
+  left: 0;
+  background-color: #ffffff;
+  list-style: none;
+  padding: 0.5rem 0;
+  margin: 0;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  min-width: 180px;
+  z-index: 100;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 0.6rem 1.2rem;
+  color: #831843;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.dropdown-item:hover {
+  background-color: #fce7f3;
+}
+
+/* Lado derecho (Buscador y Carrito bien adentro) */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+/* Contenedor del buscador optimizado */
+.search-container {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 9999px;
+  padding: 0.15rem 0.15rem 0.15rem 0.7rem;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.search-input {
+  background-color: transparent;
+  color: #1f2937;
+  border: none;
+  outline: none;
+  font-size: 0.85rem;
+  width: 110px;
+}
+
+.search-input::placeholder {
+  color: #9ca3af;
+}
+
+.search-btn {
+  background-color: #ec4899;
+  color: #ffffff;
+  border: none;
+  padding: 0.38rem 0.85rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.search-btn:hover {
+  background-color: #db2777;
+}
+
+/* Posición y diseño impecable del Carrito dentro de la barra */
+.cart-link {
+  color: #ffe4e6;
+  text-decoration: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.92rem;
+  padding: 0.4rem 0.7rem;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+  white-space: nowrap;
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.cart-link:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.cart-badge {
+  background-color: #ffffff;
+  color: #c2185b;
+  padding: 0.08rem 0.4rem;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
