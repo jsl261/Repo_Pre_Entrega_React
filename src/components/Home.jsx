@@ -22,7 +22,8 @@ function Home() {
           fontWeight: 'bold',
           fontSize: '1.1rem',
           boxShadow: '0 4px 15px rgba(255, 117, 140, 0.4)',
-          display: 'inline-block'
+          display: 'inline-block',
+          transition: 'transform 0.2s ease'
         }}
       >
         Explorar Catálogo 🚀
