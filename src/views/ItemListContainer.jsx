@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function ItemListContainer({ greeting }) {
+function ItemListContainer({ greeting, handleAddToCart }) {
   const [productos, setProductos] = useState([
     { id: 1, nombre: 'Amigurumi Conejito', precio: 15.00, img: '/images/Imagen1.jpeg', stock: 5, cantidad: 1 },
     { id: 2, nombre: 'Bufanda Texturada', precio: 22.00, img: '/images/Imagen2.jpeg', stock: 4, cantidad: 1 },
@@ -23,10 +23,6 @@ function ItemListContainer({ greeting }) {
       }
       return prod;
     }));
-  };
-
-  const handleAgregarAlCarro = (nombre, cantidad, precio) => {
-    alert(`¡Agregaste ${cantidad} unidad(es) de "${nombre}" al carrito! Total: $${(precio * cantidad).toFixed(2)}`);
   };
 
   return (
@@ -65,6 +61,7 @@ function ItemListContainer({ greeting }) {
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <span style={{ fontSize: '0.95rem', color: '#7D6658', fontWeight: '500' }}>Cantidad:</span>
                 <button 
+                  type="button"
                   onClick={() => restarCantidad(prod.id)}
                   style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid #E2D2C5', background: '#FDFBF7', cursor: 'pointer', fontWeight: 'bold', color: '#5C4033', fontSize: '1rem' }}
                 >
@@ -72,6 +69,7 @@ function ItemListContainer({ greeting }) {
                 </button>
                 <span style={{ fontSize: '1.05rem', fontWeight: 'bold', minWidth: '20px', textAlign: 'center', color: '#5C4033' }}>{prod.cantidad}</span>
                 <button 
+                  type="button"
                   onClick={() => sumarCantidad(prod.id)}
                   style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid #E2D2C5', background: '#FDFBF7', cursor: 'pointer', fontWeight: 'bold', color: '#5C4033', fontSize: '1rem' }}
                 >
@@ -80,10 +78,22 @@ function ItemListContainer({ greeting }) {
               </div>
             </div>
 
-            {/* Botón de Comprar */}
+            {/* Botón de Comprar con la lógica conectada */}
             <div>
               <button 
-                onClick={() => handleAgregarAlCarro(prod.nombre, prod.cantidad, prod.precio)}
+                type="button"
+                onClick={() => {
+                  if (handleAddToCart) {
+                    handleAddToCart({
+                      id: prod.id,
+                      nombre: prod.nombre,
+                      precio: prod.precio,
+                      cantidad: prod.cantidad,
+                      img: prod.img
+                    });
+                  }
+                  alert(`¡Agregaste ${prod.cantidad} unidad(es) de "${prod.nombre}" al carrito!`);
+                }}
                 style={{
                   background: 'linear-gradient(135deg, #D98880 0%, #C0392B 100%)',
                   color: 'white',
@@ -100,7 +110,6 @@ function ItemListContainer({ greeting }) {
                 Agregar 🛒
               </button>
             </div>
-
           </div>
         ))}
       </div>
