@@ -1,57 +1,104 @@
-import React from 'react';
-import './Footer.css';
+.main-footer {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  padding: 40px 20px 20px;
+  font-family: inherit;
+  margin-top: auto;
+}
 
-const Footer = () => {
-  const equipo = [
-    {
-      nombre: 'Julian Salazar',
-      correo: 'julian@rincondelcrochet.com',
-      imagen: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-    },
-    {
-      nombre: 'María Gómez',
-      correo: 'maria@rincondelcrochet.com',
-      imagen: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80',
-    },
-    {
-      nombre: 'Carlos Pérez',
-      correo: 'carlos@rincondelcrochet.com',
-      imagen: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
-    },
-  ];
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  text-align: center;
+}
 
-  return (
-    <footer className="main-footer">
-      <div className="footer-content">
-        {/* Contenedor centralizado verticalmente: Marca arriba, equipo abajo */}
-        <div className="footer-brand-section">
-          <h3 className="footer-title">Rincón del Crochet</h3>
-          <p className="footer-description">
-            Hecho a mano con amor y dedicación.
-          </p>
-        </div>
+.footer-brand-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 
-        <div className="footer-team-section">
-          <span className="team-label">Equipo:</span>
-          <div className="team-row">
-            {equipo.map((miembro, index) => (
-              <div key={index} className="team-card">
-                <img src={miembro.imagen} alt={miembro.nombre} className="team-avatar" />
-                <div className="team-info">
-                  <span className="team-name">{miembro.nombre}</span>
-                  <span className="team-email">{miembro.correo}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+.footer-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffb6c1;
+  margin: 0;
+}
 
-      <div className="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} Rincón del Crochet. Todos los derechos reservados.</p>
-      </div>
-    </footer>
-  );
-};
+.footer-description {
+  color: #cccccc;
+  font-size: 0.95rem;
+  margin: 0;
+}
 
-export default Footer;
+.footer-team-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+}
+
+.team-label {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #aaaaaa;
+}
+
+.team-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.team-card {
+  display: flex;
+  align-items: center;
+  background-color: #2a2a2a;
+  padding: 10px 15px;
+  border-radius: 8px;
+  gap: 12px;
+  border: 1px solid #333333;
+}
+
+.team-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.team-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.team-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.team-email {
+  font-size: 0.8rem;
+  color: #aaaaaa;
+}
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 30px auto 0;
+  padding-top: 20px;
+  border-top: 1px solid #333333;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #888888;
+}
