@@ -1,24 +1,23 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Home from './components/Home';
+import Home from './components/Home'; // 🏡 Importamos la página de inicio
 import ItemListContainer from './views/ItemListContainer';
-import Cart from './views/Cart'; // 🛒 Importamos la vista del carrito
+import Cart from './views/Cart';
 import Footer from './components/Footer';
 import './App.css';
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [cart, setCart] = useState([]); // 🛒 Estado global del carrito
+  const [cart, setCart] = useState([]);
 
-  // Función para agregar productos al carrito o sumar cantidades si ya existen
   const handleAddToCart = (productoConCantidad) => {
     setCart((prevCart) => {
       const existingIndex = prevCart.findIndex(item => item.id === productoConCantidad.id);
       if (existingIndex >= 0) {
         const updatedCart = [...prevCart];
         updatedCart[existingIndex] = {
-          ...updatedCart[existingIndex],
+          ...updatedAuthItem = updatedCart[existingIndex],
           cantidad: updatedCart[existingIndex].cantidad + productoConCantidad.cantidad
         };
         return updatedCart;
@@ -28,17 +27,14 @@ function App() {
     });
   };
 
-  // Función para eliminar un producto específico del carrito
   const handleRemoveItem = (id) => {
     setCart(prevCart => prevCart.filter(item => item.id !== id));
   };
 
-  // Función para vaciar por completo el carrito
   const handleClearCart = () => {
     setCart([]);
   };
 
-  // Calculamos el total de unidades para el Navbar
   const totalCartCount = cart.reduce((acc, item) => acc + item.cantidad, 0);
 
   return (
@@ -48,11 +44,14 @@ function App() {
         
         <div style={{ flex: 1 }}>
           <Routes>
-            <Route path="/" element={<ItemListContainer greeting="Catálogo de Productos" searchTerm={searchTerm} handleAddToCart={handleAddToCart} />} />
+            {/* 🏡 Ruta raíz independiente para la página de bienvenida */}
+            <Route path="/" element={<Home />} />
+            
+            {/* 🛍️ Ruta exclusiva para el Catálogo de Productos */}
             <Route path="/productos" element={<ItemListContainer greeting="Catálogo de Productos" searchTerm={searchTerm} handleAddToCart={handleAddToCart} />} />
             <Route path="/categoria/:categoryName" element={<ItemListContainer searchTerm={searchTerm} handleAddToCart={handleAddToCart} />} />
             
-            {/* 🛒 Nueva ruta para el Carrito */}
+            {/* 🛒 Ruta del Carrito */}
             <Route path="/carrito" element={<Cart cart={cart} onRemoveItem={handleRemoveItem} onClearCart={handleClearCart} />} />
           </Routes>
         </div>

@@ -7,6 +7,9 @@ function ItemListContainer({ greeting, handleAddToCart }) {
     { id: 3, nombre: 'Atrapasueños Crochet', precio: 12.00, img: '/images/Imagen3.jpeg', stock: 10, cantidad: 1 },
   ]);
 
+  // 🔍 Estado para controlar la imagen seleccionada para el Zoom
+  const [selectedImage, setSelectedImage] = useState(null);
+
   const sumarCantidad = (id) => {
     setProductos(productos.map(prod => {
       if (prod.id === id && prod.cantidad < prod.stock) {
@@ -47,9 +50,49 @@ function ItemListContainer({ greeting, handleAddToCart }) {
               gap: '22px'
             }}
           >
-            {/* Imagen horizontal */}
-            <div style={{ width: '140px', height: '140px', borderRadius: '12px', overflow: 'hidden', flexShrink: 0, background: '#FDFBF7' }}>
-              <img src={prod.img} alt={`Fotografía de ${prod.nombre} tejido a mano`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            {/* Imagen horizontal con efecto de lupa al pasar el cursor y zoom al hacer clic */}
+            <div 
+              onClick={() => setSelectedImage(prod)}
+              style={{ 
+                width: '140px', 
+                height: '140px', 
+                borderRadius: '12px', 
+                overflow: 'hidden', 
+                flexShrink: 0, 
+                background: '#FDFBF7',
+                cursor: 'pointer',
+                position: 'relative'
+              }}
+              title="Haz clic para hacer zoom"
+            >
+              <img 
+                src={prod.img} 
+                alt={`Fotografía de ${prod.nombre} tejido a mano`} 
+                style={{ 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'cover',
+                  transition: 'transform 0.3s ease'
+                }} 
+                onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              />
+              <div style={{
+                position: 'absolute',
+                bottom: '5px',
+                right: '5px',
+                background: 'rgba(92, 64, 51, 0.7)',
+                color: 'white',
+                borderRadius: '50%',
+                width: '24px',
+                height: '24px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '0.8rem'
+              }}>
+                🔍
+              </div>
             </div>
 
             {/* Información del producto */}
@@ -78,7 +121,7 @@ function ItemListContainer({ greeting, handleAddToCart }) {
               </div>
             </div>
 
-            {/* Botón de Comprar con la lógica conectada */}
+            {/* Botón de Comprar */}
             <div>
               <button 
                 type="button"
@@ -113,6 +156,105 @@ function ItemListContainer({ greeting, handleAddToCart }) {
           </div>
         ))}
       </div>
+
+      {/* 🔍 MODAL DE ZOOM PARA LA IMAGEN */}
+      {selectedImage && (
+        <div 
+          onClick={() => setSelectedImage(null)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            background: 'rgba(0, 0, 0, 0.75)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+            padding: '20px'
+          }}
+        >
+          <div 
+            onClick={(e) => e.stopPropagation()} 
+            style={{
+              background: '#ffffff',
+              padding: '20px',
+              borderRadius: '20px',
+              maxWidth: '500px',
+              width: '100%',
+              textAlign: 'center',
+              boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
+              position: 'relative'
+            }}
+          >
+            <button 
+              onClick={() => setSelectedImage(null)}
+              style={{
+                position: 'absolute',
+                top: '15px',
+                right: '15px',
+                background: '#C0392B',
+                color: 'white',
+                border: 'none',
+                borderRadius: '50%',
+                width: '32px',
+                height: '32px',
+                fontSize: '1rem',
+                fontWeight: 'bold',
+                cursor: 'pointer'
+              }}
+            >
+              ✕
+            </button>
+            
+            <h3 style={{ color: '#5C4033', margin: '0 0 15px 0', fontSize: '1.4rem' }}>{selectedImage.nombre}</h3>
+            
+            <div style={{ width: '100%', height: '350px', borderRadius: '12px', overflow: 'hidden', marginBottom: '15px' }}>
+              <img 
+                src={selectedImage.img} 
+                alt={selectedImage.nombre} 
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+              />
+            </div>
+            
+            <p style={{ color: '#7D6658', fontSize: '1.1rem', margin: '0 0 20px 0', fontWeight: 'bold' }}>
+              Precio: ${selectedImage.precio.toFixed(2)}
+            </p>
+
+            <button 
+              type="button"
+              onClick={() => {
+                if (handleAddToCart) {
+                  handleAddToCart({
+                    id: selectedImage.id,
+                    nombre: selectedImage.nombre,
+                    precio: selectedImage.precio,
+                    cantidad: selectedImage.cantidad,
+                    img: selectedImage.img
+                  });
+                }
+                alert(`¡Agregaste ${selectedImage.cantidad} unidad(es) de "${selectedImage.nombre}" al carrito!`);
+                setSelectedImage(null);
+              }}
+              style={{
+                background: 'linear-gradient(135deg, #D98880 0%, #C0392B 100%)',
+                color: 'white',
+                padding: '12px 30px',
+                borderRadius: '25px',
+                border: 'none',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                fontSize: '1rem',
+                width: '100%'
+              }}
+            >
+              Agregar al Carrito 🛒
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
