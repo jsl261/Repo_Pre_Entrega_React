@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 function Home() {
   return (
-    <div style={{ textAlign: 'center', padding: '60px 20px', fontFamily: 'sans-serif' }}>
-      <span style={{ fontSize: '4rem' }}>🧶</span>
+    <div style={{ textAlign: 'center', padding: '80px 20px', fontFamily: 'sans-serif' }}>
+      <span style={{ fontSize: '4.5rem' }}>🧶</span>
       <h1 style={{ color: '#ff758c', margin: '20px 0', fontSize: '2.5rem' }}>
         Bienvenidos a Rincón del Crochet
       </h1>
@@ -22,8 +22,7 @@ function Home() {
           fontWeight: 'bold',
           fontSize: '1.1rem',
           boxShadow: '0 4px 15px rgba(255, 117, 140, 0.4)',
-          display: 'inline-block',
-          transition: 'transform 0.2s ease'
+          display: 'inline-block'
         }}
       >
         Explorar Catálogo 🚀

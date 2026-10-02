@@ -34,7 +34,6 @@ function ItemListContainer({ greeting }) {
       <h2 style={{ textAlign: 'center', color: '#333', fontSize: '2rem', marginBottom: '5px' }}>{greeting}</h2>
       <p style={{ textAlign: 'center', color: '#666', marginBottom: '40px' }}>Elige tus tejidos favoritos y selecciona la cantidad</p>
 
-      {/* Contenedor en columna para tarjetas horizontales */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
         {productos.map((prod) => (
           <div 
