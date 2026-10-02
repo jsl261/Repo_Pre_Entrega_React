@@ -25,12 +25,12 @@
 .footer-title {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #ffb6c1;
+  color: #ec4961;
   margin: 0;
 }
 
 .footer-description {
-  color: #cccccc;
+  color: #f5f2f6;
   font-size: 0.95rem;
   margin: 0;
 }
@@ -61,7 +61,7 @@
 .team-card {
   display: flex;
   align-items: center;
-  background-color: #2a2a2a;
+  background-color: #da66ab;
   padding: 10px 15px;
   border-radius: 8px;
   gap: 12px;
