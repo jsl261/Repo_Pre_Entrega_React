@@ -30,49 +30,50 @@ function ItemListContainer({ greeting }) {
   };
 
   return (
-    <div style={{ padding: '40px 20px', maxWidth: '850px', margin: '0 auto', fontFamily: 'sans-serif' }}>
-      <h2 style={{ textAlign: 'center', color: '#333', fontSize: '2rem', marginBottom: '5px' }}>{greeting}</h2>
-      <p style={{ textAlign: 'center', color: '#666', marginBottom: '40px' }}>Elige tus tejidos favoritos y selecciona la cantidad</p>
+    <div style={{ padding: '50px 20px', maxWidth: '850px', margin: '0 auto', fontFamily: 'sans-serif', background: '#F9F6F0', minHeight: '80vh' }}>
+      <h2 style={{ textAlign: 'center', color: '#5C4033', fontSize: '2.2rem', marginBottom: '8px', fontWeight: '800' }}>{greeting}</h2>
+      <p style={{ textAlign: 'center', color: '#7D6658', marginBottom: '40px', fontSize: '1.1rem' }}>Elige tus tejidos favoritos y selecciona la cantidad</p>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
         {productos.map((prod) => (
           <div 
             key={prod.id} 
             style={{ 
-              background: 'white', 
-              borderRadius: '12px', 
+              background: '#ffffff', 
+              borderRadius: '16px', 
               overflow: 'hidden', 
-              boxShadow: '0 4px 15px rgba(0,0,0,0.08)', 
+              boxShadow: '0 6px 20px rgba(139, 90, 43, 0.06)', 
+              border: '1px solid #F3EAE2',
               display: 'flex', 
               flexDirection: 'row', 
               alignItems: 'center', 
-              padding: '15px',
-              gap: '20px'
+              padding: '18px',
+              gap: '22px'
             }}
           >
             {/* Imagen horizontal */}
-            <div style={{ width: '130px', height: '130px', borderRadius: '8px', overflow: 'hidden', flexShrink: 0, background: '#f9f9f9' }}>
+            <div style={{ width: '140px', height: '140px', borderRadius: '12px', overflow: 'hidden', flexShrink: 0, background: '#FDFBF7' }}>
               <img src={prod.img} alt={`Fotografía de ${prod.nombre} tejido a mano`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
 
             {/* Información del producto */}
             <div style={{ flexGrow: 1 }}>
-              <h3 style={{ margin: '0 0 5px 0', color: '#333', fontSize: '1.2rem' }}>{prod.nombre}</h3>
-              <p style={{ color: '#ff758c', fontWeight: 'bold', fontSize: '1.2rem', margin: '0 0 10px 0' }}>${prod.precio.toFixed(2)}</p>
+              <h3 style={{ margin: '0 0 6px 0', color: '#5C4033', fontSize: '1.3rem', fontWeight: '700' }}>{prod.nombre}</h3>
+              <p style={{ color: '#C0392B', fontWeight: 'bold', fontSize: '1.25rem', margin: '0 0 12px 0' }}>${prod.precio.toFixed(2)}</p>
               
               {/* Selector de Cantidad */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <span style={{ fontSize: '0.9rem', color: '#666' }}>Cantidad:</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <span style={{ fontSize: '0.95rem', color: '#7D6658', fontWeight: '500' }}>Cantidad:</span>
                 <button 
                   onClick={() => restarCantidad(prod.id)}
-                  style={{ width: '28px', height: '28px', borderRadius: '50%', border: '1px solid #ddd', background: '#fff', cursor: 'pointer', fontWeight: 'bold', color: '#555' }}
+                  style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid #E2D2C5', background: '#FDFBF7', cursor: 'pointer', fontWeight: 'bold', color: '#5C4033', fontSize: '1rem' }}
                 >
                   -
                 </button>
-                <span style={{ fontSize: '1rem', fontWeight: 'bold', minWidth: '15px', textAlign: 'center' }}>{prod.cantidad}</span>
+                <span style={{ fontSize: '1.05rem', fontWeight: 'bold', minWidth: '20px', textAlign: 'center', color: '#5C4033' }}>{prod.cantidad}</span>
                 <button 
                   onClick={() => sumarCantidad(prod.id)}
-                  style={{ width: '28px', height: '28px', borderRadius: '50%', border: '1px solid #ddd', background: '#fff', cursor: 'pointer', fontWeight: 'bold', color: '#555' }}
+                  style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid #E2D2C5', background: '#FDFBF7', cursor: 'pointer', fontWeight: 'bold', color: '#5C4033', fontSize: '1rem' }}
                 >
                   +
                 </button>
@@ -84,15 +85,16 @@ function ItemListContainer({ greeting }) {
               <button 
                 onClick={() => handleAgregarAlCarro(prod.nombre, prod.cantidad, prod.precio)}
                 style={{
-                  background: 'linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%)',
+                  background: 'linear-gradient(135deg, #D98880 0%, #C0392B 100%)',
                   color: 'white',
-                  padding: '10px 20px',
+                  padding: '12px 24px',
                   borderRadius: '25px',
                   border: 'none',
                   fontWeight: 'bold',
                   cursor: 'pointer',
-                  boxShadow: '0 4px 12px rgba(255, 117, 140, 0.4)',
-                  whiteSpace: 'nowrap'
+                  boxShadow: '0 4px 15px rgba(192, 57, 43, 0.25)',
+                  whiteSpace: 'nowrap',
+                  fontSize: '0.95rem'
                 }}
               >
                 Agregar 🛒
