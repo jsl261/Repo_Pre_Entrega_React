@@ -5,6 +5,8 @@ function ItemListContainer({ greeting, handleAddToCart }) {
     { id: 1, nombre: 'Ovejas Llaveros', precio: 10000.00, img: '/images/Imagen1.jpeg', stock: 5, cantidad: 1 },
     { id: 2, nombre: 'Virgenes', precio: 10000.00, img: '/images/Imagen2.jpeg', stock: 4, cantidad: 1 },
     { id: 3, nombre: 'Muñeca K-POP', precio: 40000.00, img: '/images/Imagen3.jpeg', stock: 10, cantidad: 1 },
+    { id: 4, nombre: 'Sonajeros', precio: 20000.00, img: '/images/Imagen4.jpeg', stock: 10, cantidad: 1 },
+    { id: 5, nombre: 'Kit de Nacimiento', precio: 50000.00, img: '/images/Imagen5.jpeg', stock: 10, cantidad: 1 },
   ]);
 
   // 🔍 Estado para controlar la imagen seleccionada para el Zoom
