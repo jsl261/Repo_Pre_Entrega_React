@@ -181,3 +181,9 @@
   font-weight: 700;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+/* Estado activo automático con NavLink */
+.nav-link.active {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.22);
+  font-weight: 600;
+}

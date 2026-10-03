@@ -3,9 +3,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import ItemListContainer from './views/ItemListContainer';
-import About from './components/About'; // 👈 1. Importas la página de Nosotros
+import About from './components/About';
 import Cart from './views/Cart';
 import Footer from './components/Footer';
+import AgregarProducto from './components/AgregarProducto'; // 👈 1. Importamos el formulario
 import './App.css';
 
 function App() {
@@ -46,13 +47,15 @@ function App() {
         <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} cartCount={totalCartCount} />
         
         <div style={{ flex: 1 }}>
-          {/* 👇 2. Las Routes van aquí, decidiendo qué componente mostrar según la URL */}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/productos" element={<ItemListContainer greeting="Catálogo de Productos" searchTerm={searchTerm} handleAddToCart={handleAddToCart} />} />
             <Route path="/categoria/:categoryName" element={<ItemListContainer searchTerm={searchTerm} handleAddToCart={handleAddToCart} />} />
-            <Route path="/nosotros" element={<About />} /> {/* 👈 3. Ruta de la página Nosotros */}
+            <Route path="/nosotros" element={<About />} />
             <Route path="/carrito" element={<Cart cart={cart} onRemoveItem={handleRemoveItem} onClearCart={handleClearCart} />} />
+            
+            {/* 👇 2. Ruta añadida para que aparezca el formulario en la pestaña de Agregar Producto */}
+            <Route path="/agregar-producto" element={<AgregarProducto />} />
           </Routes>
         </div>
         

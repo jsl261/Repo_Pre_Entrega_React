@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom'; // 👈 Importamos NavLink
 import './Navbar.css';
 
 const Navbar = ({ cartCount }) => { // 🛒 Recibimos el contador dinámico
@@ -27,16 +27,21 @@ const Navbar = ({ cartCount }) => { // 🛒 Recibimos el contador dinámico
           </Link>
           <ul className="navbar-nav">
             <li>
-              <Link to="/" className="nav-link">Inicio</Link>
+              <NavLink to="/" className="nav-link" end>Inicio</NavLink>
             </li>
             <li>
-              <Link to="/productos" className="nav-link">Productos</Link>
+              <NavLink to="/productos" className="nav-link">Productos</NavLink>
             </li>
             <li>
-              <Link to="/nosotros" className="nav-link">Nosotros</Link>
+              <NavLink to="/nosotros" className="nav-link">Nosotros</NavLink>
+            </li>
+            {/* 🌟 NUEVA PESTAÑA: AGREGAR PRODUCTO */}
+            <li>
+              <NavLink to="/agregar-producto" className="nav-link">Agregar Producto</NavLink>
             </li>
             <li className="dropdown" ref={dropdownRef}>
               <button 
+                type="button"
                 className="nav-link" 
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >

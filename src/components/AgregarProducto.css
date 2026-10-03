@@ -1,0 +1,94 @@
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1.5rem;
+  background-color: #fdf2f4;
+  min-height: calc(100vh - 80px);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.form-card-container {
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(194, 24, 91, 0.12);
+  width: 100%;
+  max-width: 480px;
+  border: 1px solid #fce7f3;
+}
+
+.crochet-form h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #831843;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #fce7f3;
+  padding-bottom: 0.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.crochet-form label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #500724;
+}
+
+.crochet-form input[type="text"],
+.crochet-form input[type="number"],
+.crochet-form input[type="file"] {
+  padding: 0.65rem 0.85rem;
+  font-size: 0.9rem;
+  border: 1.5px solid #fbcfe8;
+  border-radius: 8px;
+  outline: none;
+  background-color: #fff;
+  color: #1f2937;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.crochet-form input:focus {
+  border-color: #c2185b;
+  box-shadow: 0 0 0 3px rgba(194, 24, 91, 0.15);
+}
+
+.crochet-form input::placeholder {
+  color: #9ca3af;
+}
+
+.crochet-form input[type="file"] {
+  padding: 0.5rem;
+  font-size: 0.85rem;
+  color: #6b7280;
+  background-color: #fdf2f4;
+}
+
+.save-btn {
+  width: 100%;
+  background-color: #c2185b;
+  color: #ffffff;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  margin-top: 1rem;
+  box-shadow: 0 4px 10px rgba(194, 24, 91, 0.25);
+}
+
+.save-btn:hover {
+  background-color: #ad1457;
+}
+
+.save-btn:active {
+  transform: translateY(1px);
+}
