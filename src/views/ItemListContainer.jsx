@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 
 function ItemListContainer({ greeting, handleAddToCart }) {
   const [productos, setProductos] = useState([
-    { id: 1, nombre: 'Ovejas Llaveros', precio: 10000.00, img: '/images/Imagen1.jpeg', stock: 5, cantidad: 1 },
-    { id: 2, nombre: 'Virgenes', precio: 10000.00, img: '/images/Imagen2.jpeg', stock: 4, cantidad: 1 },
-    { id: 3, nombre: 'Muñeca K-POP', precio: 40000.00, img: '/images/Imagen3.jpeg', stock: 10, cantidad: 1 },
-    { id: 4, nombre: 'Sonajeros', precio: 20000.00, img: '/images/Imagen4.jpeg', stock: 10, cantidad: 1 },
-    { id: 5, nombre: 'Kit de Nacimiento', precio: 50000.00, img: '/images/Imagen5.jpeg', stock: 10, cantidad: 1 },
+    { id: 1, nombre: 'Ovejas Llaveros', precio: 10000.00, img: '/images/Imagen1.jpeg', stock: 5, cantidad: 1, favorito: false },
+    { id: 2, nombre: 'Virgenes', precio: 10000.00, img: '/images/Imagen2.jpeg', stock: 4, cantidad: 1, favorito: false },
+    { id: 3, nombre: 'Muñeca K-POP', precio: 40000.00, img: '/images/Imagen3.jpeg', stock: 10, cantidad: 1, favorito: false },
+    { id: 4, nombre: 'Sonajeros', precio: 20000.00, img: '/images/Imagen4.jpeg', stock: 10, cantidad: 1, favorito: false },
+    { id: 5, nombre: 'Kit de Nacimiento', precio: 50000.00, img: '/images/Imagen5.jpeg', stock: 10, cantidad: 1, favorito: false },
   ]);
 
   // 🔍 Estado para controlar la imagen seleccionada para el Zoom
@@ -25,6 +25,20 @@ function ItemListContainer({ greeting, handleAddToCart }) {
     setProductos(productos.map(prod => {
       if (prod.id === id && prod.cantidad > 1) {
         return { ...prod, cantidad: prod.cantidad - 1 };
+      }
+      return prod;
+    }));
+  };
+
+  // ❤️ Función para alternar el estado de favorito
+  const toggleFavorito = (id) => {
+    setProductos(productos.map(prod => {
+      if (prod.id === id) {
+        const actualizado = { ...prod, favorito: !prod.favorito };
+        if (selectedImage && selectedImage.id === id) {
+          setSelectedImage(actualizado);
+        }
+        return actualizado;
       }
       return prod;
     }));
@@ -49,9 +63,36 @@ function ItemListContainer({ greeting, handleAddToCart }) {
               flexDirection: 'row', 
               alignItems: 'center', 
               padding: '18px',
-              gap: '22px'
+              gap: '22px',
+              position: 'relative' // Necesario para posicionar el botón de favorito
             }}
           >
+            {/* ❤️ Botón de Favorito en la esquina superior derecha de la tarjeta */}
+            <button
+              type="button"
+              onClick={() => toggleFavorito(prod.id)}
+              style={{
+                position: 'absolute',
+                top: '12px',
+                right: '12px',
+                background: '#ffffff',
+                border: '1px solid #E2D2C5',
+                borderRadius: '50%',
+                width: '36px',
+                height: '36px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                fontSize: '1.2rem',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                zIndex: 2
+              }}
+              title={prod.favorito ? "Quitar de favoritos" : "Marcar como favorito"}
+            >
+              {prod.favorito ? '❤️' : '🤍'}
+            </button>
+
             {/* Imagen horizontal con efecto de lupa al pasar el cursor y zoom al hacer clic */}
             <div 
               onClick={() => setSelectedImage(prod)}
@@ -98,7 +139,7 @@ function ItemListContainer({ greeting, handleAddToCart }) {
             </div>
 
             {/* Información del producto */}
-            <div style={{ flexGrow: 1 }}>
+            <div style={{ flexGrow: 1, paddingRight: '25px' }}>
               <h3 style={{ margin: '0 0 6px 0', color: '#5C4033', fontSize: '1.3rem', fontWeight: '700' }}>{prod.nombre}</h3>
               <p style={{ color: '#C0392B', fontWeight: 'bold', fontSize: '1.25rem', margin: '0 0 12px 0' }}>${prod.precio.toFixed(2)}</p>
               
@@ -205,10 +246,36 @@ function ItemListContainer({ greeting, handleAddToCart }) {
                 height: '32px',
                 fontSize: '1rem',
                 fontWeight: 'bold',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                zIndex: 3
               }}
             >
               ✕
+            </button>
+            
+            {/* ❤️ Botón de Favorito dentro del Modal de Zoom */}
+            <button
+              type="button"
+              onClick={() => toggleFavorito(selectedImage.id)}
+              style={{
+                position: 'absolute',
+                top: '15px',
+                right: '55px',
+                background: '#ffffff',
+                border: '1px solid #E2D2C5',
+                borderRadius: '50%',
+                width: '32px',
+                height: '32px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                fontSize: '1.1rem',
+                zIndex: 3
+              }}
+              title={selectedImage.favorito ? "Quitar de favoritos" : "Marcar como favorito"}
+            >
+              {selectedImage.favorito ? '❤️' : '🤍'}
             </button>
             
             <h3 style={{ color: '#5C4033', margin: '0 0 15px 0', fontSize: '1.4rem' }}>{selectedImage.nombre}</h3>
