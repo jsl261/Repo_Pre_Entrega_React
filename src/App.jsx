@@ -37,10 +37,9 @@ function App() {
     setCart([]);
   };
 
-  // 👇 Nueva función para actualizar la cantidad desde el carrito (+ / -)
+  // Función para actualizar la cantidad desde el carrito (+ / -)
   const handleUpdateQuantity = (id, newQuantity) => {
     if (newQuantity <= 0) {
-      // Si la cantidad llega a 0 o menos, eliminamos el producto del carrito
       handleRemoveItem(id);
       return;
     }
@@ -66,7 +65,6 @@ function App() {
             <Route path="/categoria/:categoryName" element={<ItemListContainer searchTerm={searchTerm} handleAddToCart={handleAddToCart} />} />
             <Route path="/nosotros" element={<About />} />
             
-            {/* 👇 Pasamos la función onUpdateQuantity al componente Cart */}
             <Route 
               path="/carrito" 
               element={
@@ -90,4 +88,4 @@ function App() {
   );
 }
 
-export App;
+export default App; // 👈 ¡Aquí estaba el error! Debe ser 'export default App;'
