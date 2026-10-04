@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function Cart({ cart, onRemoveItem, onClearCart, onUpdateQuantity }) {
-  // Calculamos el precio total de toda la compra
   const totalPrice = cart.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
 
   if (cart.length === 0) {
@@ -70,10 +69,11 @@ function Cart({ cart, onRemoveItem, onClearCart, onUpdateQuantity }) {
               {/* Información y detalles */}
               <div style={{ flexGrow: 1, minWidth: 0 }}>
                 <h3 style={{ margin: '0 0 4px 0', color: '#5C4033', fontSize: '1rem', fontWeight: '700', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{prod.nombre}</h3>
-                <p style={{ color: '#7D6658', margin: '0 0 6px 0', fontSize: '0.8rem' }}>Precio unitario: ${prod.precio.toFixed(2)}</p>
+                <p style={{ color: '#7D6658', margin: '0 0 8px 0', fontSize: '0.8rem' }}>Precio unitario: ${prod.precio.toFixed(2)}</p>
                 
-                {/* Control de Cantidades (+ / -) */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                {/* Control interactivo de Cantidades (+ / -) */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ fontSize: '0.8rem', color: '#7D6658', fontWeight: '600' }}>Cantidad:</span>
                   <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #E2D2C5', borderRadius: '8px', background: '#FDFBF7', overflow: 'hidden' }}>
                     <button 
                       type="button"
