@@ -6,8 +6,7 @@ const Footer = () => {
     {
       nombre: 'Julian Salazar',
       correo: 'julian@rincondelcrochet.com',
-      imagen: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-    },
+      imagen: '/images/julian.jpeg',
     {
       nombre: 'Jael Guerra',
       correo: 'jael@rincondelcrochet.com',
