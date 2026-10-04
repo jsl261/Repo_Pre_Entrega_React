@@ -9,7 +9,7 @@ function Home() {
         {/* Logo / Imagen decorativa */}
         <div style={{ marginBottom: '20px' }}>
           <img 
-            src="/images/jaelcrochet.jpeg" 
+            src="/images/jael.jpeg" 
             alt="Ovillo y crochet con corazón" 
             style={{ 
               width: '90px', 
