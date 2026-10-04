@@ -17,7 +17,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.7rem 1.5rem; /* Padding lateral equilibrado */
+  padding: 0.7rem 1.5rem;
   box-sizing: border-box;
   color: #ffffff;
   font-family: system-ui, -apple-system, sans-serif;
@@ -67,38 +67,6 @@
 .nav-link:hover {
   color: #ffffff;
   background-color: rgba(255, 255, 255, 0.15);
-}
-
-/* Menú desplegable (Categorías) */
-.dropdown {
-  position: relative;
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: 130%;
-  left: 0;
-  background-color: #ffffff;
-  list-style: none;
-  padding: 0.5rem 0;
-  margin: 0;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  border-radius: 8px;
-  min-width: 180px;
-  z-index: 100;
-}
-
-.dropdown-item {
-  display: block;
-  padding: 0.6rem 1.2rem;
-  color: #831843;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 0.9rem;
-}
-
-.dropdown-item:hover {
-  background-color: #fce7f3;
 }
 
 /* Lado derecho (Buscador y Carrito bien adentro) */
@@ -181,9 +149,54 @@
   font-weight: 700;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 /* Estado activo automático con NavLink */
 .nav-link.active {
   color: #ffffff;
   background-color: rgba(255, 255, 255, 0.22);
   font-weight: 600;
+}
+
+/* ==========================================================
+   DISEÑO RESPONSIVO (Tablets y Celulares)
+   ========================================================== */
+@media screen and (max-width: 768px) {
+  .custom-navbar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.8rem 1rem;
+    gap: 0.8rem;
+  }
+
+  .navbar-left {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+  }
+
+  .navbar-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .navbar-right {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 0.2rem;
+  }
+
+  .search-container {
+    flex: 1;
+    margin-right: 0.5rem;
+  }
+
+  .search-input {
+    width: 100%;
+    min-width: 80px;
+  }
 }
