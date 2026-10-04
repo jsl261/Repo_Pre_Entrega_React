@@ -13,6 +13,16 @@ function Cart({ cart, onRemoveItem, onClearCart, onUpdateQuantity }) {
   const itemsToDisplay = localCart.length > 0 ? localCart : cart;
   const totalPrice = itemsToDisplay.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
 
+  // Función para formatear precios con separador de miles y sin decimales
+  const formatPrice = (valor) => {
+    return new Intl.NumberFormat('es-AR', {
+      style: 'currency',
+      currency: 'ARS',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(valor);
+  };
+
   const handleInternalUpdate = (id, newCantidad) => {
     if (newCantidad < 1) return;
     if (onUpdateQuantity) {
@@ -83,7 +93,7 @@ function Cart({ cart, onRemoveItem, onClearCart, onUpdateQuantity }) {
 
               <div style={{ flexGrow: 1, minWidth: 0 }}>
                 <h3 style={{ margin: '0 0 4px 0', color: '#5C4033', fontSize: '1rem', fontWeight: '700', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{prod.nombre}</h3>
-                <p style={{ color: '#7D6658', margin: '0 0 8px 0', fontSize: '0.8rem' }}>Precio unitario: ${prod.precio.toFixed(0)}</p>
+                <p style={{ color: '#7D6658', margin: '0 0 8px 0', fontSize: '0.8rem' }}>Precio unitario: {formatPrice(prod.precio)}</p>
                 
                 {/* BOTONES + y - FUERZA VISUAL */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -115,7 +125,7 @@ function Cart({ cart, onRemoveItem, onClearCart, onUpdateQuantity }) {
               <div>
                 <span style={{ fontSize: '0.8rem', color: '#7D6658' }}>Subtotal: </span>
                 <span style={{ color: '#C0392B', fontWeight: 'bold', fontSize: '1rem' }}>
-                  ${(prod.precio * prod.cantidad).toFixed(0)}
+                  {formatPrice(prod.precio * prod.cantidad)}
                 </span>
               </div>
               <button 
@@ -133,7 +143,7 @@ function Cart({ cart, onRemoveItem, onClearCart, onUpdateQuantity }) {
       <div style={{ background: '#ffffff', padding: '16px', borderRadius: '16px', boxShadow: '0 4px 15px rgba(139, 90, 43, 0.06)', border: '1px solid #F3EAE2', display: 'flex', flexDirection: 'column', gap: '15px', width: '100%', boxSizing: 'border-box' }}>
         <div style={{ textAlign: 'center', borderBottom: '1px solid #F3EAE2', paddingBottom: '12px', width: '100%' }}>
           <h3 style={{ margin: '0 0 4px 0', color: '#5C4033', fontSize: '1.1rem' }}>Total a Pagar:</h3>
-          <p style={{ color: '#C0392B', fontSize: '1.6rem', fontWeight: 'bold', margin: '0' }}>${totalPrice.toFixed(0)}</p>
+          <p style={{ color: '#C0392B', fontSize: '1.6rem', fontWeight: 'bold', margin: '0' }}>{formatPrice(totalPrice)}</p>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '100%' }}>
