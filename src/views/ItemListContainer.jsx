@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 function ItemListContainer({ greeting, handleAddToCart }) {
   const [productos, setProductos] = useState([
-    { id: 1, nombre: 'Ovejas Llaveros', precio: 10000.00, img: '/images/Imagen1.jpeg', stock: 5, cantidad: 1, favorito: true }, // Lo dejamos en favorito para probar
+    { id: 1, nombre: 'Ovejas Llaveros', precio: 10000.00, img: '/images/Imagen1.jpeg', stock: 5, cantidad: 1, favorito: true },
     { id: 2, nombre: 'Virgenes', precio: 10000.00, img: '/images/Imagen2.jpeg', stock: 4, cantidad: 1, favorito: false },
     { id: 3, nombre: 'Muñeca K-POP', precio: 40000.00, img: '/images/Imagen3.jpeg', stock: 10, cantidad: 1, favorito: false },
     { id: 4, nombre: 'Sonajeros', precio: 20000.00, img: '/images/Imagen4.jpeg', stock: 10, cantidad: 1, favorito: false },
@@ -11,6 +11,15 @@ function ItemListContainer({ greeting, handleAddToCart }) {
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [vistaActual, setVistaActual] = useState('todos');
+
+  // Función para formatear el precio (Pesos argentinos, sin decimales y con punto de mil)
+  const formatearPrecio = (precio) => {
+    const numeroFormateado = new Intl.NumberFormat('es-AR', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(precio);
+    return `$${numeroFormateado}`;
+  };
 
   const sumarCantidad = (id) => {
     setProductos(productos.map(prod => {
@@ -112,14 +121,14 @@ function ItemListContainer({ greeting, handleAddToCart }) {
                 boxShadow: '0 6px 20px rgba(139, 90, 43, 0.06)', 
                 border: '1px solid #F3EAE2',
                 display: 'flex', 
-                flexDirection: 'column', // En celulares se acomoda en columna vertical para que nada quede oculto
+                flexDirection: 'column', 
                 alignItems: 'stretch', 
                 padding: '16px',
                 gap: '15px',
                 position: 'relative'
               }}
             >
-              {/* ❤️️ Botón de Favorito */}
+              {/* ❤ Botón de Favorito */}
               <button
                 type="button"
                 onClick={() => toggleFavorito(prod.id)}
@@ -171,7 +180,8 @@ function ItemListContainer({ greeting, handleAddToCart }) {
                 {/* Información básica */}
                 <div style={{ flexGrow: 1, paddingRight: '30px' }}>
                   <h3 style={{ margin: '0 0 6px 0', color: '#5C4033', fontSize: '1.15rem', fontWeight: '700' }}>{prod.nombre}</h3>
-                  <p style={{ color: '#C0392B', fontWeight: 'bold', fontSize: '1.15rem', margin: '0 0 10px 0' }}>${prod.precio.toFixed(2)}</p>
+                  {/* Precio formateado */}
+                  <p style={{ color: '#C0392B', fontWeight: 'bold', fontSize: '1.15rem', margin: '0 0 10px 0' }}>{formatearPrecio(prod.precio)}</p>
                   
                   {/* Selector de Cantidad */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -256,7 +266,8 @@ function ItemListContainer({ greeting, handleAddToCart }) {
             <div style={{ width: '100%', height: '300px', borderRadius: '12px', overflow: 'hidden', marginBottom: '15px' }}>
               <img src={selectedImage.img} alt={selectedImage.nombre} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
-            <p style={{ color: '#7D6658', fontSize: '1.1rem', margin: '0 0 20px 0', fontWeight: 'bold' }}>Precio: ${selectedImage.precio.toFixed(2)}</p>
+            {/* Precio formateado en el modal */}
+            <p style={{ color: '#7D6658', fontSize: '1.1rem', margin: '0 0 20px 0', fontWeight: 'bold' }}>Precio: {formatearPrecio(selectedImage.precio)}</p>
             <button 
               type="button"
               onClick={() => {
