@@ -29,10 +29,11 @@ function Cart({ cart, onRemoveItem, onClearCart }) {
   }
 
   return (
-    <div style={{ padding: '50px 20px', maxWidth: '850px', margin: '0 auto', fontFamily: 'sans-serif', background: '#F9F6F0', minHeight: '80vh' }}>
-      <h2 style={{ textAlign: 'center', color: '#5C4033', fontSize: '2.2rem', marginBottom: '30px', fontWeight: '800' }}>Tu Carrito de Compras</h2>
+    <div style={{ padding: '30px 15px', maxWidth: '850px', margin: '0 auto', fontFamily: 'sans-serif', background: '#F9F6F0', minHeight: '80vh' }}>
+      <h2 style={{ textAlign: 'center', color: '#5C4033', fontSize: '1.9rem', marginBottom: '25px', fontWeight: '800' }}>Tu Carrito de Compras</h2>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '30px' }}>
+      {/* Lista de Productos del Carrito */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', marginBottom: '25px' }}>
         {cart.map((prod) => (
           <div 
             key={prod.id} 
@@ -42,28 +43,34 @@ function Cart({ cart, onRemoveItem, onClearCart }) {
               boxShadow: '0 6px 20px rgba(139, 90, 43, 0.06)', 
               border: '1px solid #F3EAE2',
               display: 'flex', 
-              alignItems: 'center', 
-              padding: '18px',
-              gap: '20px'
+              flexDirection: 'column', // En celulares se adapta en columna para evitar desbordes
+              padding: '16px',
+              gap: '15px',
+              position: 'relative'
             }}
           >
-            {/* Imagen del producto */}
-            <div style={{ width: '100px', height: '100px', borderRadius: '12px', overflow: 'hidden', flexShrink: 0, background: '#FDFBF7' }}>
-              <img src={prod.img} alt={prod.nombre} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <div style={{ display: 'flex', flexDirection: 'row', gap: '15px', alignItems: 'center' }}>
+              {/* Imagen del producto */}
+              <div style={{ width: '90px', height: '90px', borderRadius: '12px', overflow: 'hidden', flexShrink: 0, background: '#FDFBF7' }}>
+                <img src={prod.img} alt={prod.nombre} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+
+              {/* Información y detalles */}
+              <div style={{ flexGrow: 1 }}>
+                <h3 style={{ margin: '0 0 4px 0', color: '#5C4033', fontSize: '1.1rem', fontWeight: '700' }}>{prod.nombre}</h3>
+                <p style={{ color: '#7D6658', margin: '0 0 2px 0', fontSize: '0.85rem' }}>Precio unitario: ${prod.precio.toFixed(2)}</p>
+                <p style={{ color: '#5C4033', margin: '0', fontSize: '0.9rem', fontWeight: '600' }}>Cantidad: {prod.cantidad}</p>
+              </div>
             </div>
 
-            {/* Información y detalles */}
-            <div style={{ flexGrow: 1 }}>
-              <h3 style={{ margin: '0 0 6px 0', color: '#5C4033', fontSize: '1.2rem', fontWeight: '700' }}>{prod.nombre}</h3>
-              <p style={{ color: '#7D6658', margin: '0 0 4px 0', fontSize: '0.95rem' }}>Precio unitario: ${prod.precio.toFixed(2)}</p>
-              <p style={{ color: '#5C4033', margin: '0', fontWeight: '600' }}>Cantidad: {prod.cantidad}</p>
-            </div>
-
-            {/* Subtotal por producto */}
-            <div style={{ textAlign: 'right', minWidth: '100px' }}>
-              <p style={{ color: '#C0392B', fontWeight: 'bold', fontSize: '1.2rem', margin: '0 0 10px 0' }}>
-                ${(prod.precio * prod.cantidad).toFixed(2)}
-              </p>
+            {/* Fila inferior de cada tarjeta: Subtotal y botón eliminar */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid #F3EAE2', paddingTop: '12px' }}>
+              <div>
+                <span style={{ fontSize: '0.85rem', color: '#7D6658' }}>Subtotal: </span>
+                <span style={{ color: '#C0392B', fontWeight: 'bold', fontSize: '1.1rem' }}>
+                  ${(prod.precio * prod.cantidad).toFixed(2)}
+                </span>
+              </div>
               <button 
                 type="button"
                 onClick={() => onRemoveItem(prod.id)}
@@ -71,7 +78,7 @@ function Cart({ cart, onRemoveItem, onClearCart }) {
                   background: 'transparent',
                   color: '#C0392B',
                   border: '1px solid #C0392B',
-                  padding: '6px 12px',
+                  padding: '6px 14px',
                   borderRadius: '15px',
                   cursor: 'pointer',
                   fontSize: '0.85rem',
@@ -85,14 +92,24 @@ function Cart({ cart, onRemoveItem, onClearCart }) {
         ))}
       </div>
 
-      {/* Resumen y Acciones Finales */}
-      <div style={{ background: '#ffffff', padding: '24px', borderRadius: '16px', boxShadow: '0 6px 20px rgba(139, 90, 43, 0.06)', border: '1px solid #F3EAE2', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div>
-          <h3 style={{ margin: '0 0 5px 0', color: '#5C4033', fontSize: '1.4rem' }}>Total a Pagar:</h3>
+      {/* Resumen y Acciones Finales (Adaptable en columna para celulares) */}
+      <div style={{ 
+        background: '#ffffff', 
+        padding: '20px', 
+        borderRadius: '16px', 
+        boxShadow: '0 6px 20px rgba(139, 90, 43, 0.06)', 
+        border: '1px solid #F3EAE2', 
+        display: 'flex', 
+        flexDirection: 'column', // En celulares va en columna para que los botones entren perfectos
+        gap: '20px',
+        align-items: 'stretch' 
+      }}>
+        <div style={{ textAlign: 'center', borderBottom: '1px solid #F3EAE2', paddingBottom: '15px' }}>
+          <h3 style={{ margin: '0 0 5px 0', color: '#5C4033', fontSize: '1.2rem' }}>Total a Pagar:</h3>
           <p style={{ color: '#C0392B', fontSize: '1.8rem', fontWeight: 'bold', margin: '0' }}>${totalPrice.toFixed(2)}</p>
         </div>
 
-        <div style={{ display: 'flex', gap: '12px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <button 
             type="button"
             onClick={onClearCart}
@@ -104,7 +121,8 @@ function Cart({ cart, onRemoveItem, onClearCart }) {
               borderRadius: '25px',
               fontWeight: 'bold',
               cursor: 'pointer',
-              fontSize: '0.95rem'
+              fontSize: '0.95rem',
+              width: '100%'
             }}
           >
             Vaciar Carrito
@@ -116,13 +134,14 @@ function Cart({ cart, onRemoveItem, onClearCart }) {
             style={{
               background: 'linear-gradient(135deg, #D98880 0%, #C0392B 100%)',
               color: 'white',
-              padding: '12px 24px',
+              padding: '12px 20px',
               borderRadius: '25px',
               border: 'none',
               fontWeight: 'bold',
               cursor: 'pointer',
               boxShadow: '0 4px 15px rgba(192, 57, 43, 0.25)',
-              fontSize: '0.95rem'
+              fontSize: '0.95rem',
+              width: '100%'
             }}
           >
             Finalizar Compra ✨
