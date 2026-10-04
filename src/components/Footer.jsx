@@ -10,12 +10,12 @@ const Footer = () => {
     },
     {
       nombre: 'Jael Guerra',
-      correo: 'maria@rincondelcrochet.com',
+      correo: 'jael@rincondelcrochet.com',
       imagen: '/images/jael.jpeg',
     },
     {
       nombre: 'Indira Lara',
-      correo: 'carlos@rincondelcrochet.com',
+      correo: 'indira@rincondelcrochet.com',
       imagen: '/images/indira.jpeg',
     },
   ];
