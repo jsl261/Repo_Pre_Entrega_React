@@ -7,22 +7,22 @@ const Footer = () => {
       nombre: 'Julian Salazar',
       correo: 'julian@rincondelcrochet.com',
       imagen: '/images/julian.jpeg',
+    },
     {
       nombre: 'Jael Guerra',
-      correo: 'jael@rincondelcrochet.com',
-      imagen: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80',
+      correo: 'maria@rincondelcrochet.com',
+      imagen: '/images/jael.jpeg',
     },
     {
       nombre: 'Indira Lara',
-      correo: 'indira@rincondelcrochet.com',
-     imagen: '/images/indira.jpeg',
+      correo: 'carlos@rincondelcrochet.com',
+      imagen: '/images/indira.jpeg',
     },
   ];
 
   return (
     <footer className="main-footer">
       <div className="footer-content">
-        {/* Contenedor centralizado verticalmente: Marca arriba, equipo abajo */}
         <div className="footer-brand-section">
           <h3 className="footer-title">Rincón del Crochet</h3>
           <p className="footer-description">
