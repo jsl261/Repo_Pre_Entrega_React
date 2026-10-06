@@ -1,19 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import productosData from '../data/productos.json';
 
 function ItemDetail({ handleAddToCart }) {
   const { id } = useParams();
-  const producto = productosData.find(p => p.id === parseInt(id));
+  const [producto, setProducto] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [cantidad, setCantidad] = useState(1);
+
+  useEffect(() => {
+    try {
+      // Cargamos los productos dinámicamente desde el localStorage
+      const productosGuardados = JSON.parse(localStorage.getItem('productos_personalizados') || '[]');
+      
+      // Buscamos comparando ambos como string para evitar conflictos de tipos
+      const encontrado = productosGuardados.find(p => String(p.id) === String(id));
+      
+      setProducto(encontrado || null);
+    } catch (error) {
+      console.error('Error al buscar el producto:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [id]);
 
   const formatearPrecio = (precio) => {
     return new Intl.NumberFormat('es-AR', {
       style: 'currency',
       currency: 'ARS',
       maximumFractionDigits: 0
-    }).format(precio);
+    }).format(precio || 0);
   };
+
+  if (loading) {
+    return (
+      <div style={{ textAlign: 'center', padding: '60px 20px', background: '#F9F6F0', minHeight: '70vh', fontFamily: 'sans-serif' }}>
+        <h2 style={{ color: '#5C4033' }}>Cargando detalle...</h2>
+      </div>
+    );
+  }
 
   if (!producto) {
     return (
@@ -41,10 +65,14 @@ function ItemDetail({ handleAddToCart }) {
     );
   }
 
+  // Soporte para que lea tanto 'imagen' (ImgBB) como 'img' por compatibilidad
+  const imagenSrc = producto.imagen || producto.img || 'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=500&q=80';
+  const stockDisponible = producto.stock ? Number(producto.stock) : 10;
+
   return (
     <div style={{ padding: '30px 15px', maxWidth: '700px', margin: '0 auto', fontFamily: 'sans-serif', background: '#F9F6F0', minHeight: '80vh' }}>
       
-      {/* Botón de retorno con el estilo exacto de píldora marrón */}
+      {/* Botón de retorno */}
       <div style={{ marginBottom: '20px' }}>
         <Link 
           to="/productos" 
@@ -77,14 +105,14 @@ function ItemDetail({ handleAddToCart }) {
         gap: '20px' 
       }}>
         <div style={{ width: '100%', height: '320px', borderRadius: '14px', overflow: 'hidden', background: '#FDFBF7' }}>
-          <img src={producto.img} alt={producto.nombre} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          <img src={imagenSrc} alt={producto.nombre} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </div>
 
         <div>
           <h2 style={{ color: '#5C4033', fontSize: '1.8rem', margin: '0 0 10px 0' }}>{producto.nombre}</h2>
           <p style={{ color: '#C0392B', fontSize: '1.4rem', fontWeight: 'bold', margin: '0 0 15px 0' }}>{formatearPrecio(producto.precio)}</p>
-          <p style={{ color: '#7D6658', fontSize: '1rem', lineHeight: '1.5', margin: '0 0 20px 0' }}>{producto.descripcion}</p>
-          <p style={{ color: '#888', fontSize: '0.9rem', marginBottom: '20px' }}>Stock disponible: {producto.stock} unidades</p>
+          <p style={{ color: '#7D6658', fontSize: '1.0rem', lineHeight: '1.5', margin: '0 0 20px 0' }}>{producto.descripcion}</p>
+          <p style={{ color: '#888', fontSize: '0.9rem', marginBottom: '20px' }}>Stock disponible: {stockDisponible} unidades</p>
 
           {/* Control de cantidad */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '25px' }}>
@@ -97,7 +125,7 @@ function ItemDetail({ handleAddToCart }) {
             <span style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#5C4033', minWidth: '20px', textAlign: 'center' }}>{cantidad}</span>
             <button 
               type="button"
-              onClick={() => setCantidad(Math.min(producto.stock, cantidad + 1))}
+              onClick={() => setCantidad(Math.min(stockDisponible, cantidad + 1))}
               style={{ width: '35px', height: '35px', borderRadius: '50%', border: '1px solid #E2D2C5', background: '#FDFBF7', cursor: 'pointer', fontWeight: 'bold', fontSize: '1.1rem', color: '#5C4033' }}
             >+</button>
           </div>
