@@ -170,4 +170,3 @@ function ItemDetail({ handleAddToCart }) {
 }
 
 export default ItemDetail;
-export default ItemDetail;
