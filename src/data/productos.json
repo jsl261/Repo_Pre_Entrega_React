@@ -1,26 +1,47 @@
 [
   {
     "id": 1,
-    "nombre": "Amigurumi Osito tierno",
-    "precio": 15000,
-    "categoria": "amigurumis",
-    "imagen": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?q=80&w=500&auto=format&fit=crop",
-    "descripcion": "Osito tejido a crochet con hilo 100% algodón e hipoalergénico."
+    "nombre": "Ovejas Llaveros",
+    "precio": 10000.00,
+    "img": "/images/Imagen1.jpeg",
+    "stock": 5,
+    "descripcion": "Llaveros artesanales tejidos a mano en forma de tiernas ovejas.",
+    "favorito": true
   },
   {
     "id": 2,
-    "nombre": "Manta Nórdica XL",
-    "precio": 45000,
-    "categoria": "hogar",
-    "imagen": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?q=80&w=500&auto=format&fit=crop",
-    "descripcion": "Manta tejida a mano ideal para pie de cama o sillón."
+    "nombre": "Virgenes",
+    "precio": 10000.00,
+    "img": "/images/Imagen2.jpeg",
+    "stock": 4,
+    "descripcion": "Pequeñas imágenes tejidas con gran dedicación y detalles delicados.",
+    "favorito": false
   },
   {
     "id": 3,
-    "nombre": "Cartera Boho Chic",
-    "precio": 22000,
-    "categoria": "accesorios",
-    "imagen": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?q=80&w=500&auto=format&fit=crop",
-    "descripcion": "Bolso estilo matero o urbano tejido con técnica de red."
+    "nombre": "Muñeca K-POP",
+    "precio": 40000.00,
+    "img": "/images/Imagen3.jpeg",
+    "stock": 10,
+    "descripcion": "Muñeca estilizada inspirada en la cultura K-POP, totalmente tejida a crochet.",
+    "favorito": false
+  },
+  {
+    "id": 4,
+    "nombre": "Sonajeros",
+    "precio": 20000.00,
+    "img": "/images/Imagen4.jpeg",
+    "stock": 10,
+    "descripcion": "Sonajero seguro y suave para bebés, elaborado con materiales hipoalergénicos.",
+    "favorito": false
+  },
+  {
+    "id": 5,
+    "nombre": "Kit de Nacimiento",
+    "precio": 50000.00,
+    "img": "/images/Imagen5.jpeg",
+    "stock": 10,
+    "descripcion": "Set completo de accesorios tejidos ideales para regalar en un nacimiento.",
+    "favorito": false
   }
 ]

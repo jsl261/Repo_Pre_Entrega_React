@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import ItemListContainer from './views/ItemListContainer';
+import ItemDetail from './views/ItemDetail'; // 👈 Importamos la vista de detalle
 import About from './components/About';
 import Cart from './views/Cart';
 import Footer from './components/Footer';
@@ -37,7 +38,6 @@ function App() {
     setCart([]);
   };
 
-  // Función para actualizar la cantidad desde el carrito (+ / -)
   const handleUpdateQuantity = (id, newQuantity) => {
     if (newQuantity <= 0) {
       handleRemoveItem(id);
@@ -63,6 +63,10 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/productos" element={<ItemListContainer greeting="Catálogo de Productos" searchTerm={searchTerm} handleAddToCart={handleAddToCart} />} />
             <Route path="/categoria/:categoryName" element={<ItemListContainer searchTerm={searchTerm} handleAddToCart={handleAddToCart} />} />
+            
+            {/* 👈 Ruta dinámica para el detalle de cada producto */}
+            <Route path="/producto/:id" element={<ItemDetail handleAddToCart={handleAddToCart} />} />
+            
             <Route path="/nosotros" element={<About />} />
             
             <Route 
@@ -88,4 +92,4 @@ function App() {
   );
 }
 
-export default App; // 👈 ¡Aquí estaba el error! Debe ser 'export default App;'
+export default App;

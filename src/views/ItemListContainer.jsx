@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import productosData from '../data/productos.json';
 
 function ItemListContainer({ greeting, handleAddToCart }) {
-  const [productos, setProductos] = useState([
-    { id: 1, nombre: 'Ovejas Llaveros', precio: 10000.00, img: '/images/Imagen1.jpeg', stock: 5, cantidad: 1, favorito: true },
-    { id: 2, nombre: 'Virgenes', precio: 10000.00, img: '/images/Imagen2.jpeg', stock: 4, cantidad: 1, favorito: false },
-    { id: 3, nombre: 'Muñeca K-POP', precio: 40000.00, img: '/images/Imagen3.jpeg', stock: 10, cantidad: 1, favorito: false },
-    { id: 4, nombre: 'Sonajeros', precio: 20000.00, img: '/images/Imagen4.jpeg', stock: 10, cantidad: 1, favorito: false },
-    { id: 5, nombre: 'Kit de Nacimiento', precio: 50000.00, img: '/images/Imagen5.jpeg', stock: 10, cantidad: 1, favorito: false },
-  ]);
-
+  const [productos, setProductos] = useState(productosData);
   const [selectedImage, setSelectedImage] = useState(null);
   const [vistaActual, setVistaActual] = useState('todos');
 
@@ -24,7 +19,7 @@ function ItemListContainer({ greeting, handleAddToCart }) {
   const sumarCantidad = (id) => {
     setProductos(productos.map(prod => {
       if (prod.id === id && prod.cantidad < prod.stock) {
-        return { ...prod, cantidad: prod.cantidad + 1 };
+        return { ...prod, cantidad: (prod.cantidad || 1) + 1 };
       }
       return prod;
     }));
@@ -32,7 +27,7 @@ function ItemListContainer({ greeting, handleAddToCart }) {
 
   const restarCantidad = (id) => {
     setProductos(productos.map(prod => {
-      if (prod.id === id && prod.cantidad > 1) {
+      if (prod.id === id && (prod.cantidad || 1) > 1) {
         return { ...prod, cantidad: prod.cantidad - 1 };
       }
       return prod;
@@ -111,134 +106,156 @@ function ItemListContainer({ greeting, handleAddToCart }) {
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          {productosAMostrar.map((prod) => (
-            <div 
-              key={prod.id} 
-              style={{ 
-                background: '#ffffff', 
-                borderRadius: '16px', 
-                overflow: 'hidden', 
-                boxShadow: '0 6px 20px rgba(139, 90, 43, 0.06)', 
-                border: '1px solid #F3EAE2',
-                display: 'flex', 
-                flexDirection: 'column', 
-                alignItems: 'stretch', 
-                padding: '16px',
-                gap: '15px',
-                position: 'relative'
-              }}
-            >
-              {/* ❤ Botón de Favorito */}
-              <button
-                type="button"
-                onClick={() => toggleFavorito(prod.id)}
-                style={{
-                  position: 'absolute',
-                  top: '12px',
-                  right: '12px',
-                  background: '#ffffff',
-                  border: '1px solid #E2D2C5',
-                  borderRadius: '50%',
-                  width: '36px',
-                  height: '36px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  fontSize: '1.2rem',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-                  zIndex: 2
+          {productosAMostrar.map((prod) => {
+            const cantidadActual = prod.cantidad || 1;
+            return (
+              <div 
+                key={prod.id} 
+                style={{ 
+                  background: '#ffffff', 
+                  borderRadius: '16px', 
+                  overflow: 'hidden', 
+                  boxShadow: '0 6px 20px rgba(139, 90, 43, 0.06)', 
+                  border: '1px solid #F3EAE2',
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  alignItems: 'stretch', 
+                  padding: '16px',
+                  gap: '15px',
+                  position: 'relative'
                 }}
-                title={prod.favorito ? "Quitar de favoritos" : "Marcar como favorito"}
               >
-                {prod.favorito ? '❤️' : '🤍'}
-              </button>
-
-              <div style={{ display: 'flex', flexDirection: 'row', gap: '15px', alignItems: 'center' }}>
-                {/* Imagen con zoom */}
-                <div 
-                  onClick={() => setSelectedImage(prod)}
-                  style={{ 
-                    width: '110px', 
-                    height: '110px', 
-                    borderRadius: '12px', 
-                    overflow: 'hidden', 
-                    flexShrink: 0, 
-                    background: '#FDFBF7',
+                {/* ❤ Botón de Favorito */}
+                <button
+                  type="button"
+                  onClick={() => toggleFavorito(prod.id)}
+                  style={{
+                    position: 'absolute',
+                    top: '12px',
+                    right: '12px',
+                    background: '#ffffff',
+                    border: '1px solid #E2D2C5',
+                    borderRadius: '50%',
+                    width: '36px',
+                    height: '36px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                     cursor: 'pointer',
-                    position: 'relative'
+                    fontSize: '1.2rem',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                    zIndex: 2
                   }}
-                  title="Haz clic para hacer zoom"
+                  title={prod.favorito ? "Quitar de favoritos" : "Marcar como favorito"}
                 >
-                  <img 
-                    src={prod.img} 
-                    alt={`Fotografía de ${prod.nombre} tejido a mano`} 
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
-                  />
-                </div>
+                  {prod.favorito ? '❤️' : '🤍'}
+                </button>
 
-                {/* Información básica */}
-                <div style={{ flexGrow: 1, paddingRight: '30px' }}>
-                  <h3 style={{ margin: '0 0 6px 0', color: '#5C4033', fontSize: '1.15rem', fontWeight: '700' }}>{prod.nombre}</h3>
-                  {/* Precio formateado */}
-                  <p style={{ color: '#C0392B', fontWeight: 'bold', fontSize: '1.15rem', margin: '0 0 10px 0' }}>{formatearPrecio(prod.precio)}</p>
-                  
-                  {/* Selector de Cantidad */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <span style={{ fontSize: '0.9rem', color: '#7D6658', fontWeight: '500' }}>Cant:</span>
-                    <button 
-                      type="button"
-                      onClick={() => restarCantidad(prod.id)}
-                      style={{ width: '30px', height: '30px', borderRadius: '50%', border: '1px solid #E2D2C5', background: '#FDFBF7', cursor: 'pointer', fontWeight: 'bold', color: '#5C4033', fontSize: '1rem' }}
-                    >
-                      -
-                    </button>
-                    <span style={{ fontSize: '1rem', fontWeight: 'bold', minWidth: '20px', textAlign: 'center', color: '#5C4033' }}>{prod.cantidad}</span>
-                    <button 
-                      type="button"
-                      onClick={() => sumarCantidad(prod.id)}
-                      style={{ width: '30px', height: '30px', borderRadius: '50%', border: '1px solid #E2D2C5', background: '#FDFBF7', cursor: 'pointer', fontWeight: 'bold', color: '#5C4033', fontSize: '1rem' }}
-                    >
-                      +
-                    </button>
+                <div style={{ display: 'flex', flexDirection: 'row', gap: '15px', alignItems: 'center' }}>
+                  {/* Imagen con zoom */}
+                  <div 
+                    onClick={() => setSelectedImage(prod)}
+                    style={{ 
+                      width: '110px', 
+                      height: '110px', 
+                      borderRadius: '12px', 
+                      overflow: 'hidden', 
+                      flexShrink: 0, 
+                      background: '#FDFBF7',
+                      cursor: 'pointer',
+                      position: 'relative'
+                    }}
+                    title="Haz clic para hacer zoom"
+                  >
+                    <img 
+                      src={prod.img} 
+                      alt={`Fotografía de ${prod.nombre} tejido a mano`} 
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                    />
+                  </div>
+
+                  {/* Información básica */}
+                  <div style={{ flexGrow: 1, paddingRight: '30px' }}>
+                    <h3 style={{ margin: '0 0 6px 0', color: '#5C4033', fontSize: '1.15rem', fontWeight: '700' }}>{prod.nombre}</h3>
+                    {/* Precio formateado */}
+                    <p style={{ color: '#C0392B', fontWeight: 'bold', fontSize: '1.15rem', margin: '0 0 10px 0' }}>{formatearPrecio(prod.precio)}</p>
+                    
+                    {/* Selector de Cantidad */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <span style={{ fontSize: '0.9rem', color: '#7D6658', fontWeight: '500' }}>Cant:</span>
+                      <button 
+                        type="button"
+                        onClick={() => restarCantidad(prod.id)}
+                        style={{ width: '30px', height: '30px', borderRadius: '50%', border: '1px solid #E2D2C5', background: '#FDFBF7', cursor: 'pointer', fontWeight: 'bold', color: '#5C4033', fontSize: '1rem' }}
+                      >
+                        -
+                      </button>
+                      <span style={{ fontSize: '1rem', fontWeight: 'bold', minWidth: '20px', textAlign: 'center', color: '#5C4033' }}>{cantidadActual}</span>
+                      <button 
+                        type="button"
+                        onClick={() => sumarCantidad(prod.id)}
+                        style={{ width: '30px', height: '30px', borderRadius: '50%', border: '1px solid #E2D2C5', background: '#FDFBF7', cursor: 'pointer', fontWeight: 'bold', color: '#5C4033', fontSize: '1rem' }}
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Botón de Comprar a lo ancho en celulares */}
-              <div>
-                <button 
-                  type="button"
-                  onClick={() => {
-                    if (handleAddToCart) {
-                      handleAddToCart({
-                        id: prod.id,
-                        nombre: prod.nombre,
-                        precio: prod.precio,
-                        cantidad: prod.cantidad,
-                        img: prod.img
-                      });
-                    }
-                    alert(`¡Agregaste ${prod.cantidad} unidad(es) de "${prod.nombre}" al carrito!`);
-                  }}
-                  style={{
-                    background: 'linear-gradient(135deg, #D98880 0%, #C0392B 100%)',
-                    color: 'white',
-                    padding: '12px 20px',
-                    borderRadius: '25px',
-                    border: 'none',
-                    fontWeight: 'bold',
-                    cursor: 'pointer',
-                    boxShadow: '0 4px 15px rgba(192, 57, 43, 0.25)',
-                    width: '100%',
-                    fontSize: '0.95rem'
-                  }}
-                >
-                  Agregar al Carrito 🛒
-                </button>
+                {/* Botones de acción: Ver Detalle y Agregar al Carrito */}
+                <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                  <Link 
+                    to={`/producto/${prod.id}`}
+                    style={{
+                      flex: 1,
+                      textAlign: 'center',
+                      background: '#FDFBF7',
+                      color: '#5C4033',
+                      padding: '12px 20px',
+                      borderRadius: '25px',
+                      border: '1px solid #E2D2C5',
+                      textDecoration: 'none',
+                      fontWeight: 'bold',
+                      fontSize: '0.95rem',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.03)'
+                    }}
+                  >
+                    Ver Detalle 🔍
+                  </Link>
+
+                  <button 
+                    type="button"
+                    onClick={() => {
+                      if (handleAddToCart) {
+                        handleAddToCart({
+                          id: prod.id,
+                          nombre: prod.nombre,
+                          precio: prod.precio,
+                          cantidad: cantidadActual,
+                          img: prod.img
+                        });
+                      }
+                      alert(`¡Agregaste ${cantidadActual} unidad(es) de "${prod.nombre}" al carrito!`);
+                    }}
+                    style={{
+                      flex: 2,
+                      background: 'linear-gradient(135deg, #D98880 0%, #C0392B 100%)',
+                      color: 'white',
+                      padding: '12px 20px',
+                      borderRadius: '25px',
+                      border: 'none',
+                      fontWeight: 'bold',
+                      cursor: 'pointer',
+                      boxShadow: '0 4px 15px rgba(192, 57, 43, 0.25)',
+                      fontSize: '0.95rem'
+                    }}
+                  >
+                    Agregar al Carrito 🛒
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
@@ -272,9 +289,9 @@ function ItemListContainer({ greeting, handleAddToCart }) {
               type="button"
               onClick={() => {
                 if (handleAddToCart) {
-                  handleAddToCart({ id: selectedImage.id, nombre: selectedImage.nombre, precio: selectedImage.precio, cantidad: selectedImage.cantidad, img: selectedImage.img });
+                  handleAddToCart({ id: selectedImage.id, nombre: selectedImage.nombre, precio: selectedImage.precio, cantidad: selectedImage.cantidad || 1, img: selectedImage.img });
                 }
-                alert(`¡Agregaste ${selectedImage.cantidad} unidad(es) de "${selectedImage.nombre}" al carrito!`);
+                alert(`¡Agregaste ${selectedImage.cantidad || 1} unidad(es) de "${selectedImage.nombre}" al carrito!`);
                 setSelectedImage(null);
               }}
               style={{ background: 'linear-gradient(135deg, #D98880 0%, #C0392B 100%)', color: 'white', padding: '12px 30px', borderRadius: '25px', border: 'none', fontWeight: 'bold', cursor: 'pointer', width: '100%' }}
