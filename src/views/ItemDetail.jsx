@@ -6,15 +6,12 @@ function ItemDetail({ handleAddToCart }) {
   const [producto, setProducto] = useState(null);
   const [loading, setLoading] = useState(true);
   const [cantidad, setCantidad] = useState(1);
+  const [isZoomed, setIsZoomed] = useState(false); // 🔍 Estado para el zoom
 
   useEffect(() => {
     try {
-      // Cargamos los productos dinámicamente desde el localStorage
       const productosGuardados = JSON.parse(localStorage.getItem('productos_personalizados') || '[]');
-      
-      // Buscamos comparando ambos como string para evitar conflictos de tipos
       const encontrado = productosGuardados.find(p => String(p.id) === String(id));
-      
       setProducto(encontrado || null);
     } catch (error) {
       console.error('Error al buscar el producto:', error);
@@ -46,17 +43,9 @@ function ItemDetail({ handleAddToCart }) {
         <Link 
           to="/productos" 
           style={{ 
-            background: '#5C4033',
-            color: '#ffffff',
-            border: '1px solid #5C4033',
-            padding: '10px 20px',
-            borderRadius: '20px',
-            fontWeight: 'bold',
-            cursor: 'pointer',
-            fontSize: '0.9rem',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
-            textDecoration: 'none',
-            display: 'inline-block'
+            background: '#5C4033', color: '#ffffff', border: '1px solid #5C4033', 
+            padding: '10px 20px', borderRadius: '20px', fontWeight: 'bold', 
+            cursor: 'pointer', fontSize: '0.9rem', textDecoration: 'none', display: 'inline-block' 
           }}
         >
           ← Ir al catálogo
@@ -65,7 +54,6 @@ function ItemDetail({ handleAddToCart }) {
     );
   }
 
-  // Soporte para que lea tanto 'imagen' (ImgBB) como 'img' por compatibilidad
   const imagenSrc = producto.imagen || producto.img || 'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=500&q=80';
   const stockDisponible = producto.stock ? Number(producto.stock) : 10;
 
@@ -77,17 +65,9 @@ function ItemDetail({ handleAddToCart }) {
         <Link 
           to="/productos" 
           style={{ 
-            background: '#5C4033',
-            color: '#ffffff',
-            border: '1px solid #5C4033',
-            padding: '10px 20px',
-            borderRadius: '20px',
-            fontWeight: 'bold',
-            cursor: 'pointer',
-            fontSize: '0.9rem',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
-            textDecoration: 'none',
-            display: 'inline-block'
+            background: '#5C4033', color: '#ffffff', border: '1px solid #5C4033', 
+            padding: '10px 20px', borderRadius: '20px', fontWeight: 'bold', 
+            cursor: 'pointer', fontSize: '0.9rem', textDecoration: 'none', display: 'inline-block' 
           }}
         >
           ← Ir al catálogo
@@ -95,18 +75,40 @@ function ItemDetail({ handleAddToCart }) {
       </div>
       
       <div style={{ 
-        background: '#ffffff', 
-        borderRadius: '20px', 
-        padding: '25px', 
-        boxShadow: '0 6px 20px rgba(139, 90, 43, 0.08)', 
-        border: '1px solid #F3EAE2', 
-        display: 'flex', 
-        flexDirection: 'column', 
-        gap: '20px' 
+        background: '#ffffff', borderRadius: '20px', padding: '25px', 
+        boxShadow: '0 6px 20px rgba(139, 90, 43, 0.08)', border: '1px solid #F3EAE2', 
+        display: 'flex', flexDirection: 'column', gap: '20px' 
       }}>
-        <div style={{ width: '100%', height: '320px', borderRadius: '14px', overflow: 'hidden', background: '#FDFBF7' }}>
-          <img src={imagenSrc} alt={producto.nombre} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        
+        {/* Contenedor de la Imagen con Zoom de ~2.25x */}
+        <div 
+          onClick={() => setIsZoomed(!isZoomed)}
+          style={{ 
+            width: '100%', 
+            height: '320px', 
+            borderRadius: '14px', 
+            overflow: 'hidden', 
+            background: '#FDFBF7', 
+            cursor: isZoomed ? 'zoom-out' : 'zoom-in',
+            position: 'relative'
+          }}
+        >
+          <img 
+            src={imagenSrc} 
+            alt={producto.nombre} 
+            style={{ 
+              width: '100%', 
+              height: '100%', 
+              objectFit: 'cover',
+              transform: isZoomed ? 'scale(2.25)' : 'scale(1)',
+              transformOrigin: 'center center',
+              transition: 'transform 0.3s ease-in-out'
+            }} 
+          />
         </div>
+        <p style={{ fontSize: '0.8rem', color: '#888', textAlign: 'center', margin: '-10px 0 0 0' }}>
+          🔍 Haz clic en la imagen para hacer zoom
+        </p>
 
         <div>
           <h2 style={{ color: '#5C4033', fontSize: '1.8rem', margin: '0 0 10px 0' }}>{producto.nombre}</h2>

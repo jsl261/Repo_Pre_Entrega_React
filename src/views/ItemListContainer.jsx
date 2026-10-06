@@ -1,5 +1,6 @@
 import React from 'react';
-import { productos } from '../data/productos'; // <-- Importas directamente tu archivo estático
+import { productos } from '../data/productos'; // Importas tu archivo estático
+import Item from '../components/Item';          // 👈 1. Importamos tu componente Item
 
 export default function ItemListContainer() {
   return (
@@ -13,16 +14,8 @@ export default function ItemListContainer() {
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '24px' }}>
           {productos.map((prod) => (
-            <div key={prod.id} style={{ background: 'white', padding: '16px', borderRadius: '12px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-              <img 
-                src={prod.img} 
-                alt={prod.nombre} 
-                style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '8px' }} 
-              />
-              <h3 style={{ color: '#831843', margin: '12px 0 8px' }}>{prod.nombre}</h3>
-              <p style={{ color: '#4b5563', fontSize: '0.9rem', marginBottom: '12px' }}>{prod.descripcion}</p>
-              <span style={{ fontWeight: 'bold', color: '#db2777', fontSize: '1.2rem' }}>${prod.precio}</span>
-            </div>
+            // 👈 2. Renderizamos el componente Item pasándole el producto como prop
+            <Item key={prod.id} producto={prod} />
           ))}
         </div>
       )}
