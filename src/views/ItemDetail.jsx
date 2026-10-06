@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { productos as productosEstaticos } from '../data/productos'; // 👈 Importas tu catálogo estático
 
 function ItemDetail({ handleAddToCart }) {
   const { id } = useParams();
   const [producto, setProducto] = useState(null);
   const [loading, setLoading] = useState(true);
   const [cantidad, setCantidad] = useState(1);
-  const [isZoomed, setIsZoomed] = useState(false); // 🔍 Estado para el zoom
+  const [isZoomed, setIsZoomed] = useState(false);
 
   useEffect(() => {
     try {
-      const productosGuardados = JSON.parse(localStorage.getItem('productos_personalizados') || '[]');
-      const encontrado = productosGuardados.find(p => String(p.id) === String(id));
+      // 1. Buscamos primero en el archivo estático de productos
+      let encontrado = productosEstaticos.find(p => String(p.id) === String(id));
+
+      // 2. Si no está en el estático, buscamos en el localStorage por si fue agregado dinámicamente
+      if (!encontrado) {
+        const productosGuardados = JSON.parse(localStorage.getItem('productos_personalizados') || '[]');
+        encontrado = productosGuardados.find(p => String(p.id) === String(id));
+      }
+
       setProducto(encontrado || null);
     } catch (error) {
       console.error('Error al buscar el producto:', error);
@@ -161,4 +169,5 @@ function ItemDetail({ handleAddToCart }) {
   );
 }
 
+export default ItemDetail;
 export default ItemDetail;
