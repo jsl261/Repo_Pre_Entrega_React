@@ -1,20 +1,48 @@
-// src/components/Navbar.jsx
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { auth } from '../firebase/config';
+import { auth, db } from '../firebase/config';
+import { doc, getDoc, setDoc } from 'firebase/firestore'; // 👈 Añadimos setDoc
 import './Navbar.css';
 
 const Navbar = ({ cartCount }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [cargandoAuth, setCargandoAuth] = useState(true);
   const navigate = useNavigate();
 
-  // Escuchar el estado de autenticación de Firebase en tiempo real
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      setCargandoAuth(true);
       setUser(currentUser);
+
+      if (currentUser) {
+        try {
+          const docRef = doc(db, 'usuarios', currentUser.uid);
+          let docSnap = await getDoc(docRef);
+
+          // Si el documento no existe y es tu correo de admin, lo creamos automáticamente
+          if (!docSnap.exists() && currentUser.email === 'jael.guerra@gmail.com') {
+            await setDoc(docRef, { rol: 'admin', email: currentUser.email });
+            docSnap = await getDoc(docRef); // Volvemos a leerlo
+          }
+
+          if (docSnap.exists() && docSnap.data().rol === 'admin') {
+            setIsAdmin(true);
+          } else {
+            setIsAdmin(false);
+          }
+        } catch (error) {
+          console.error('Error al verificar o crear el rol:', error);
+          setIsAdmin(false);
+        }
+      } else {
+        setIsAdmin(false);
+      }
+      setCargandoAuth(false);
     });
+
     return () => unsubscribe();
   }, []);
 
@@ -22,6 +50,8 @@ const Navbar = ({ cartCount }) => {
     e.preventDefault();
     try {
       await signOut(auth);
+      setUser(null);
+      setIsAdmin(false);
       setIsOpen(false);
       navigate('/');
     } catch (error) {
@@ -29,7 +59,6 @@ const Navbar = ({ cartCount }) => {
     }
   };
 
-  // Función para cerrar el menú automáticamente al hacer clic en un enlace
   const handleLinkClick = () => {
     setIsOpen(false);
   };
@@ -37,7 +66,6 @@ const Navbar = ({ cartCount }) => {
   return (
     <header className="main-header">
       <nav className="custom-navbar">
-        {/* Fila superior visible siempre (Logo y Botón Hamburguesa) */}
         <div className="navbar-top-row">
           <Link to="/" className="navbar-brand" onClick={handleLinkClick}>
             Rincón del Crochet
@@ -52,7 +80,6 @@ const Navbar = ({ cartCount }) => {
           </button>
         </div>
 
-        {/* Contenedor colapsable para móviles */}
         <div className={`navbar-collapse ${isOpen ? 'open' : ''}`}>
           <div className="navbar-left">
             <ul className="navbar-nav">
@@ -65,11 +92,14 @@ const Navbar = ({ cartCount }) => {
               <li>
                 <NavLink to="/nosotros" className="nav-link" onClick={handleLinkClick}>Nosotros</NavLink>
               </li>
-              <li>
-                <NavLink to="/agregar-producto" className="nav-link" onClick={handleLinkClick}>Agregar Producto</NavLink>
-              </li>
+
+              {/* Se muestra unicamente si el usuario esta logueado y es admin */}
+              {!cargandoAuth && user && isAdmin && (
+                <li>
+                  <NavLink to="/agregar-producto" className="nav-link" onClick={handleLinkClick}>Agregar Producto</NavLink>
+                </li>
+              )}
               
-              {/* Dinámico: Muestra el usuario activo y la opción de Salir con Bootstrap Icon */}
               {user ? (
                 <>
                   <li>
@@ -84,7 +114,7 @@ const Navbar = ({ cartCount }) => {
                       className="nav-link"
                       style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                     >
-                      <i className="bi bi-door-closed" style={{ fontSize: '1rem' }}></i> Salir
+                      Salir
                     </a>
                   </li>
                 </>
