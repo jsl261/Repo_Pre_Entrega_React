@@ -1,9 +1,33 @@
-import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+// src/components/Navbar.jsx
+import React, { useState, useEffect } from 'react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { auth } from '../firebase/config';
 import './Navbar.css';
 
 const Navbar = ({ cartCount }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  // Escuchar el estado de autenticación de Firebase en tiempo real
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    try {
+      await signOut(auth);
+      setIsOpen(false);
+      navigate('/');
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    }
+  };
 
   // Función para cerrar el menú automáticamente al hacer clic en un enlace
   const handleLinkClick = () => {
@@ -44,6 +68,31 @@ const Navbar = ({ cartCount }) => {
               <li>
                 <NavLink to="/agregar-producto" className="nav-link" onClick={handleLinkClick}>Agregar Producto</NavLink>
               </li>
+              
+              {/* Dinámico: Muestra el usuario activo y la opción de Salir con Bootstrap Icon */}
+              {user ? (
+                <>
+                  <li>
+                    <span className="nav-link" style={{ cursor: 'default', opacity: 0.9 }}>
+                      👤 {user.email}
+                    </span>
+                  </li>
+                  <li>
+                    <a 
+                      href="#logout" 
+                      onClick={handleLogout} 
+                      className="nav-link"
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                    >
+                      <i className="bi bi-door-closed" style={{ fontSize: '1rem' }}></i> Salir
+                    </a>
+                  </li>
+                </>
+              ) : (
+                <li>
+                  <NavLink to="/login" className="nav-link" onClick={handleLinkClick}>👤 Ingresar</NavLink>
+                </li>
+              )}
             </ul>
           </div>
 

@@ -3,11 +3,12 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import ItemListContainer from './views/ItemListContainer';
-import ItemDetail from './views/ItemDetail'; // 👈 Importamos la vista de detalle
+import ItemDetail from './views/ItemDetail';
 import About from './components/About';
 import Cart from './views/Cart';
 import Footer from './components/Footer';
 import AgregarProducto from './components/AgregarProducto';
+import Login from './components/Login'; // 👈 Importamos el componente de Login
 import './App.css';
 
 function App() {
@@ -63,12 +64,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/productos" element={<ItemListContainer greeting="Catálogo de Productos" searchTerm={searchTerm} handleAddToCart={handleAddToCart} />} />
             <Route path="/categoria/:categoryName" element={<ItemListContainer searchTerm={searchTerm} handleAddToCart={handleAddToCart} />} />
-            
-            {/* 👈 Ruta dinámica para el detalle de cada producto */}
             <Route path="/producto/:id" element={<ItemDetail handleAddToCart={handleAddToCart} />} />
-            
             <Route path="/nosotros" element={<About />} />
-            
             <Route 
               path="/carrito" 
               element={
@@ -80,8 +77,10 @@ function App() {
                 />
               } 
             />
-            
             <Route path="/agregar-producto" element={<AgregarProducto />} />
+            
+            {/* 👈 Nueva ruta para el inicio de sesión y registro */}
+            <Route path="/login" element={<Login />} />
           </Routes>
         </div>
         
