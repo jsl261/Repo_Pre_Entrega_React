@@ -1,6 +1,5 @@
 /* src/components/AgregarProducto.css */
 
-/* Reset y estructura principal en columna */
 .agregar-producto-main {
   display: flex !important;
   flex-direction: column !important;
@@ -15,7 +14,6 @@
   overflow-x: hidden !important;
 }
 
-/* Contenedor unificado para centrar y apilar verticalmente */
 .agregar-producto-content {
   display: flex !important;
   flex-direction: column !important;
@@ -26,8 +24,8 @@
   box-sizing: border-box !important;
 }
 
-/* Tarjeta del Formulario */
-.form-card-box {
+.form-card-box,
+.gestionar-productos-box {
   width: 100% !important;
   background-color: #ffffff !important;
   padding: 2rem 1.2rem !important;
@@ -37,10 +35,22 @@
   border: 1px solid #fce7f3 !important;
 }
 
-/* Estilos de Inputs para neutralizar el modo oscuro forzado de móviles */
-.form-card-box input[type="text"],
-.form-card-box input[type="number"],
-.form-card-box textarea {
+.form-group-item {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 5px !important;
+  width: 100% !important;
+}
+
+.form-group-item label {
+  font-weight: bold !important;
+  color: #4b5563 !important;
+  font-size: 0.9rem !important;
+}
+
+.form-group-item input[type="text"],
+.form-group-item input[type="number"],
+.form-group-item textarea {
   width: 100% !important;
   padding: 0.65rem 0.85rem !important;
   border-radius: 8px !important;
@@ -50,15 +60,30 @@
   -webkit-appearance: none !important;
   appearance: none !important;
   box-sizing: border-box !important;
+  font-family: inherit !important;
 }
 
-/* Tarjeta de Gestión de Productos */
-.gestionar-productos-box {
+.btn-guardar-prod {
   width: 100% !important;
-  background-color: #ffffff !important;
-  padding: 20px 1.2rem !important;
-  border-radius: 12px !important;
-  box-shadow: 0 8px 24px rgba(194, 24, 91, 0.12) !important;
-  box-sizing: border-box !important;
+  padding: 0.75rem !important;
+  background-color: #c2185b !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-weight: bold !important;
+  cursor: pointer !important;
+  margin-top: 5px !important;
+}
+
+.prod-admin-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: #fdf2f8 !important;
+  padding: 12px 10px !important;
+  border-radius: 8px !important;
   border: 1px solid #fce7f3 !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  box-sizing: border-box !important;
 }

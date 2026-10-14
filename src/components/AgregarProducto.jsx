@@ -174,7 +174,7 @@ function AgregarProducto() {
 
   if (verificando) {
     return (
-      <main className="agregar-producto-main" style={{ textAlign: 'center', padding: '60px' }}>
+      <main className="agregar-producto-main" style={{ textAlign: 'center' }}>
         <h3>Verificando permisos de administrador... ⏳</h3>
       </main>
     );
@@ -182,21 +182,13 @@ function AgregarProducto() {
 
   if (!user || !isAdmin) {
     return (
-      <main className="agregar-producto-main" style={{ textAlign: 'center', padding: '60px' }}>
-        <div style={{ background: '#fff', padding: '40px', borderRadius: '12px', maxWidth: '400px', margin: '0 auto', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+      <main className="agregar-producto-main" style={{ textAlign: 'center' }}>
+        <div style={{ background: '#fff', padding: '40px', borderRadius: '12px', maxWidth: '400px', margin: '0 auto' }}>
           <h2 style={{ color: '#78281F', marginBottom: '15px' }}>Acceso Restringido 🔒</h2>
-          <p style={{ color: '#555', marginBottom: '20px' }}>Esta sección es exclusiva para el administrador del sitio. Inicia sesión con la cuenta correcta.</p>
+          <p style={{ color: '#555', marginBottom: '20px' }}>Esta sección es exclusiva para el administrador del sitio.</p>
           <button 
             onClick={() => navigate('/login')}
-            style={{
-              padding: '10px 20px',
-              backgroundColor: '#c2185b',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontWeight: 'bold'
-            }}
+            className="btn-guardar-prod"
           >
             Iniciar Sesión
           </button>
@@ -228,8 +220,8 @@ function AgregarProducto() {
               </div>
             )}
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
-              <label htmlFor="name" style={{ fontWeight: 'bold', color: '#4b5563', fontSize: '0.9rem' }}>Nombre del Producto:</label>
+            <div className="form-group-item">
+              <label htmlFor="name">Nombre del Producto:</label>
               <input
                 type="text"
                 id="name"
@@ -242,8 +234,8 @@ function AgregarProducto() {
               />
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
-              <label htmlFor="description" style={{ fontWeight: 'bold', color: '#4b5563', fontSize: '0.9rem' }}>Descripción:</label>
+            <div className="form-group-item">
+              <label htmlFor="description">Descripción:</label>
               <textarea
                 id="description"
                 name="description"
@@ -255,8 +247,8 @@ function AgregarProducto() {
               />
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
-              <label htmlFor="price" style={{ fontWeight: 'bold', color: '#4b5563', fontSize: '0.9rem' }}>Precio:</label>
+            <div className="form-group-item">
+              <label htmlFor="price">Precio:</label>
               <input
                 type="number"
                 id="price"
@@ -269,8 +261,8 @@ function AgregarProducto() {
               />
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
-              <label htmlFor="stock" style={{ fontWeight: 'bold', color: '#4b5563', fontSize: '0.9rem' }}>Stock:</label>
+            <div className="form-group-item">
+              <label htmlFor="stock">Stock:</label>
               <input
                 type="number"
                 id="stock"
@@ -282,8 +274,8 @@ function AgregarProducto() {
               />
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
-              <label htmlFor="image" style={{ fontWeight: 'bold', color: '#4b5563', fontSize: '0.9rem' }}>Imagen:</label>
+            <div className="form-group-item">
+              <label htmlFor="image">Imagen:</label>
               <input
                 type="file"
                 id="image"
@@ -291,33 +283,13 @@ function AgregarProducto() {
                 accept="image/*"
                 onChange={handleChange}
                 required
-                style={{
-                  width: '100%',
-                  padding: '0.5rem',
-                  fontSize: '0.85rem',
-                  borderRadius: '8px',
-                  border: '1.5px solid #fbcfe8',
-                  backgroundColor: '#fdf2f4',
-                  color: '#6b7280',
-                  boxSizing: 'border-box'
-                }}
               />
             </div>
 
             <button 
               type="submit" 
               disabled={cargando}
-              style={{
-                width: '100%',
-                padding: '0.75rem',
-                backgroundColor: '#c2185b',
-                color: '#ffffff',
-                border: 'none',
-                borderRadius: '8px',
-                fontWeight: 'bold',
-                cursor: 'pointer',
-                marginTop: '5px'
-              }}
+              className="btn-guardar-prod"
             >
               {cargando ? 'Subiendo imagen a ImgBB...' : 'Guardar Producto'}
             </button>
@@ -335,7 +307,7 @@ function AgregarProducto() {
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {productosAdmin.map((prod) => (
-                <div key={prod.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#fdf2f8', padding: '12px 10px', borderRadius: '8px', border: '1px solid #fce7f3', flexWrap: 'wrap', gap: '10px', boxSizing: 'border-box' }}>
+                <div key={prod.id} className="prod-admin-item">
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <img src={prod.img} alt={prod.nombre} style={{ width: '45px', height: '45px', objectFit: 'cover', borderRadius: '6px' }} />
                     <div>
@@ -358,8 +330,7 @@ function AgregarProducto() {
                           border: '1px solid #d1d5db', 
                           textAlign: 'center',
                           backgroundColor: '#ffffff',
-                          color: '#1f2937',
-                          WebkitAppearance: 'none'
+                          color: '#1f2937'
                         }}
                         min="0"
                       />
