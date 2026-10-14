@@ -11,7 +11,6 @@ import {
   doc, 
   updateDoc 
 } from 'firebase/firestore';
-// NOTA: Eliminamos la importación de './AgregarProducto.css' para evitar conflictos de diseño.
 
 function AgregarProducto() {
   const [formData, setFormData] = useState({
@@ -207,12 +206,10 @@ function AgregarProducto() {
 
   return (
     <main style={{ 
-      display: 'flex', 
-      flexDirection: 'column', 
-      alignItems: 'center', 
-      justifyContent: 'flex-start',
-      padding: '20px 10px 80px 10px', 
+      display: 'block', 
       width: '100%', 
+      maxWidth: '100%',
+      padding: '20px 10px 80px 10px', 
       boxSizing: 'border-box',
       backgroundColor: '#fdf2f4',
       minHeight: '100vh',
@@ -222,7 +219,7 @@ function AgregarProducto() {
       <div style={{ 
         width: '100%', 
         maxWidth: '480px', 
-        marginBottom: '25px',
+        margin: '0 auto 25px auto',
         backgroundColor: '#ffffff',
         padding: '2rem 1.2rem',
         borderRadius: '12px',
@@ -393,6 +390,7 @@ function AgregarProducto() {
       <div style={{ 
         maxWidth: '480px', 
         width: '100%', 
+        margin: '0 auto',
         backgroundColor: '#fff', 
         padding: '20px 1.2rem', 
         borderRadius: '12px', 
