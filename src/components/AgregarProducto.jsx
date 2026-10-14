@@ -172,6 +172,12 @@ function AgregarProducto() {
     }
   };
 
+  const modificarStockConBotones = (id, stockActual, operacion) => {
+    const nuevoStock = operacion === 'incrementar' ? stockActual + 1 : stockActual - 1;
+    if (nuevoStock < 0) return;
+    cambiarStock(id, nuevoStock);
+  };
+
   if (verificando) {
     return (
       <main className="agregar-producto-main" style={{ textAlign: 'center' }}>
@@ -317,15 +323,22 @@ function AgregarProducto() {
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                       <label style={{ fontSize: '0.8rem', fontWeight: 'bold', color: '#4b5563' }}>Stock:</label>
+                      <button 
+                        type="button"
+                        onClick={() => modificarStockConBotones(prod.id, prod.stock, 'decrementar')}
+                        style={{ padding: '2px 6px', backgroundColor: '#f3f4f6', border: '1px solid #d1d5db', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+                      >
+                        -
+                      </button>
                       <input 
                         type="number" 
                         value={prod.stock} 
                         onChange={(e) => cambiarStock(prod.id, e.target.value)}
                         style={{ 
-                          width: '50px', 
+                          width: '40px', 
                           padding: '4px', 
                           borderRadius: '4px', 
                           border: '1px solid #d1d5db', 
@@ -335,6 +348,13 @@ function AgregarProducto() {
                         }}
                         min="0"
                       />
+                      <button 
+                        type="button"
+                        onClick={() => modificarStockConBotones(prod.id, prod.stock, 'incrementar')}
+                        style={{ padding: '2px 6px', backgroundColor: '#f3f4f6', border: '1px solid #d1d5db', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+                      >
+                        +
+                      </button>
                     </div>
 
                     <button 
