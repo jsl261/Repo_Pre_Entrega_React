@@ -206,244 +206,255 @@ function AgregarProducto() {
 
   return (
     <main style={{ 
-      display: 'block', 
+      display: 'flex', 
+      flexDirection: 'column',
+      alignItems: 'center',
       width: '100%', 
-      maxWidth: '100%',
-      padding: '20px 10px 80px 10px', 
+      maxWidth: '100vw',
+      padding: '20px 15px 80px 15px', 
       boxSizing: 'border-box',
       backgroundColor: '#fdf2f4',
       minHeight: '100vh',
       overflowX: 'hidden'
     }}>
-      {/* Contenedor del Formulario */}
+      {/* Contenedor unificado para centrar y apilar en columna */}
       <div style={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center', 
         width: '100%', 
         maxWidth: '480px', 
-        margin: '0 auto 25px auto',
-        backgroundColor: '#ffffff',
-        padding: '2rem 1.2rem',
-        borderRadius: '12px',
-        boxShadow: '0 8px 24px rgba(194, 24, 91, 0.12)',
-        boxSizing: 'border-box',
-        border: '1px solid #fce7f3'
+        gap: '25px',
+        boxSizing: 'border-box'
       }}>
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px', width: '100%' }}>
-          <h2 style={{ color: '#831843', fontSize: '1.25rem', marginBottom: '5px' }}>Agregar Nuevo Producto (Nube)</h2>
+        
+        {/* Formulario */}
+        <div style={{ 
+          width: '100%', 
+          backgroundColor: '#ffffff',
+          padding: '2rem 1.2rem',
+          borderRadius: '12px',
+          boxShadow: '0 8px 24px rgba(194, 24, 91, 0.12)',
+          boxSizing: 'border-box',
+          border: '1px solid #fce7f3'
+        }}>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px', width: '100%' }}>
+            <h2 style={{ color: '#831843', fontSize: '1.25rem', marginBottom: '5px' }}>Agregar Nuevo Producto (Nube)</h2>
 
-          {mensaje && (
-            <div style={{
-              padding: '10px',
-              borderRadius: '8px',
-              background: mensaje.includes('❌') ? '#FADBD8' : '#D4EFDF',
-              color: mensaje.includes('❌') ? '#78281F' : '#145A32',
-              fontSize: '0.9rem',
-              textAlign: 'center',
-              fontWeight: 'bold'
-            }}>
-              {mensaje}
+            {mensaje && (
+              <div style={{
+                padding: '10px',
+                borderRadius: '8px',
+                background: mensaje.includes('❌') ? '#FADBD8' : '#D4EFDF',
+                color: mensaje.includes('❌') ? '#78281F' : '#145A32',
+                fontSize: '0.9rem',
+                textAlign: 'center',
+                fontWeight: 'bold'
+              }}>
+                {mensaje}
+              </div>
+            )}
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
+              <label htmlFor="name" style={{ fontWeight: 'bold', color: '#4b5563', fontSize: '0.9rem' }}>Nombre del Producto:</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Ej: Amigurumi Osito"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                autoComplete="off"
+                style={{
+                  width: '100%',
+                  padding: '0.65rem 0.85rem',
+                  borderRadius: '8px',
+                  border: '1.5px solid #fbcfe8',
+                  backgroundColor: '#ffffff',
+                  color: '#1f2937',
+                  WebkitAppearance: 'none',
+                  boxSizing: 'border-box'
+                }}
+              />
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
+              <label htmlFor="description" style={{ fontWeight: 'bold', color: '#4b5563', fontSize: '0.9rem' }}>Descripción:</label>
+              <textarea
+                id="description"
+                name="description"
+                placeholder="Detalles del tejido, materiales, medidas..."
+                value={formData.description}
+                onChange={handleChange}
+                rows="3"
+                style={{ 
+                  width: '100%', 
+                  padding: '10px', 
+                  borderRadius: '8px', 
+                  border: '1.5px solid #fbcfe8', 
+                  resize: 'vertical', 
+                  fontFamily: 'inherit', 
+                  backgroundColor: '#ffffff', 
+                  color: '#1f2937',
+                  WebkitAppearance: 'none',
+                  boxSizing: 'border-box'
+                }}
+                required
+              />
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
+              <label htmlFor="price" style={{ fontWeight: 'bold', color: '#4b5563', fontSize: '0.9rem' }}>Precio:</label>
+              <input
+                type="number"
+                id="price"
+                name="price"
+                placeholder="Ej: 9500"
+                step="0.01"
+                value={formData.price}
+                onChange={handleChange}
+                required
+                style={{
+                  width: '100%',
+                  padding: '0.65rem 0.85rem',
+                  borderRadius: '8px',
+                  border: '1.5px solid #fbcfe8',
+                  backgroundColor: '#ffffff',
+                  color: '#1f2937',
+                  WebkitAppearance: 'none',
+                  boxSizing: 'border-box'
+                }}
+              />
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
+              <label htmlFor="stock" style={{ fontWeight: 'bold', color: '#4b5563', fontSize: '0.9rem' }}>Stock:</label>
+              <input
+                type="number"
+                id="stock"
+                name="stock"
+                placeholder="Ej: 5"
+                value={formData.stock}
+                onChange={handleChange}
+                required
+                style={{
+                  width: '100%',
+                  padding: '0.65rem 0.85rem',
+                  borderRadius: '8px',
+                  border: '1.5px solid #fbcfe8',
+                  backgroundColor: '#ffffff',
+                  color: '#1f2937',
+                  WebkitAppearance: 'none',
+                  boxSizing: 'border-box'
+                }}
+              />
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
+              <label htmlFor="image" style={{ fontWeight: 'bold', color: '#4b5563', fontSize: '0.9rem' }}>Imagen:</label>
+              <input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/*"
+                onChange={handleChange}
+                required
+                style={{
+                  width: '100%',
+                  padding: '0.5rem',
+                  fontSize: '0.85rem',
+                  borderRadius: '8px',
+                  border: '1.5px solid #fbcfe8',
+                  backgroundColor: '#fdf2f4',
+                  color: '#6b7280',
+                  boxSizing: 'border-box'
+                }}
+              />
+            </div>
+
+            <button 
+              type="submit" 
+              disabled={cargando}
+              style={{
+                width: '100%',
+                padding: '0.75rem',
+                backgroundColor: '#c2185b',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '8px',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                marginTop: '5px'
+              }}
+            >
+              {cargando ? 'Subiendo imagen a ImgBB...' : 'Guardar Producto'}
+            </button>
+          </form>
+        </div>
+
+        {/* Contenedor de Gestión de Productos */}
+        <div style={{ 
+          width: '100%', 
+          backgroundColor: '#fff', 
+          padding: '20px 1.2rem', 
+          borderRadius: '12px', 
+          boxShadow: '0 8px 24px rgba(194, 24, 91, 0.12)',
+          boxSizing: 'border-box',
+          border: '1px solid #fce7f3'
+        }}>
+          <h3 style={{ color: '#831843', marginBottom: '20px', borderBottom: '2px solid #fce7f3', paddingBottom: '10px', fontSize: '1.1rem' }}>
+            📦 Gestionar Productos en la Nube ({productosAdmin.length})
+          </h3>
+
+          {productosAdmin.length === 0 ? (
+            <p style={{ color: '#6b7280', textAlign: 'center', padding: '20px' }}>No hay productos registrados en Firestore todavía.</p>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {productosAdmin.map((prod) => (
+                <div key={prod.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#fdf2f8', padding: '12px 10px', borderRadius: '8px', border: '1px solid #fce7f3', flexWrap: 'wrap', gap: '10px', boxSizing: 'border-box' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <img src={prod.img} alt={prod.nombre} style={{ width: '45px', height: '45px', objectFit: 'cover', borderRadius: '6px' }} />
+                    <div>
+                      <h4 style={{ margin: 0, color: '#831843', fontSize: '0.9rem' }}>{prod.nombre}</h4>
+                      <span style={{ color: '#be185d', fontWeight: 'bold', fontSize: '0.85rem' }}>${prod.precio}</span>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <label style={{ fontSize: '0.8rem', fontWeight: 'bold', color: '#4b5563' }}>Stock:</label>
+                      <input 
+                        type="number" 
+                        value={prod.stock} 
+                        onChange={(e) => cambiarStock(prod.id, e.target.value)}
+                        style={{ 
+                          width: '50px', 
+                          padding: '4px', 
+                          borderRadius: '4px', 
+                          border: '1px solid #d1d5db', 
+                          textAlign: 'center',
+                          backgroundColor: '#ffffff',
+                          color: '#1f2937',
+                          WebkitAppearance: 'none'
+                        }}
+                        min="0"
+                      />
+                    </div>
+
+                    <button 
+                      onClick={() => eliminarProducto(prod.id)}
+                      style={{ background: '#dc2626', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', fontSize: '0.8rem' }}
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
           )}
+        </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
-            <label htmlFor="name" style={{ fontWeight: 'bold', color: '#4b5563', fontSize: '0.9rem' }}>Nombre del Producto:</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Ej: Amigurumi Osito"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              autoComplete="off"
-              style={{
-                width: '100%',
-                padding: '0.65rem 0.85rem',
-                borderRadius: '8px',
-                border: '1.5px solid #fbcfe8',
-                backgroundColor: '#ffffff',
-                color: '#1f2937',
-                WebkitAppearance: 'none',
-                boxSizing: 'border-box'
-              }}
-            />
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
-            <label htmlFor="description" style={{ fontWeight: 'bold', color: '#4b5563', fontSize: '0.9rem' }}>Descripción:</label>
-            <textarea
-              id="description"
-              name="description"
-              placeholder="Detalles del tejido, materiales, medidas..."
-              value={formData.description}
-              onChange={handleChange}
-              rows="3"
-              style={{ 
-                width: '100%', 
-                padding: '10px', 
-                borderRadius: '8px', 
-                border: '1.5px solid #fbcfe8', 
-                resize: 'vertical', 
-                fontFamily: 'inherit', 
-                backgroundColor: '#ffffff', 
-                color: '#1f2937',
-                WebkitAppearance: 'none',
-                boxSizing: 'border-box'
-              }}
-              required
-            />
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
-            <label htmlFor="price" style={{ fontWeight: 'bold', color: '#4b5563', fontSize: '0.9rem' }}>Precio:</label>
-            <input
-              type="number"
-              id="price"
-              name="price"
-              placeholder="Ej: 9500"
-              step="0.01"
-              value={formData.price}
-              onChange={handleChange}
-              required
-              style={{
-                width: '100%',
-                padding: '0.65rem 0.85rem',
-                borderRadius: '8px',
-                border: '1.5px solid #fbcfe8',
-                backgroundColor: '#ffffff',
-                color: '#1f2937',
-                WebkitAppearance: 'none',
-                boxSizing: 'border-box'
-              }}
-            />
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
-            <label htmlFor="stock" style={{ fontWeight: 'bold', color: '#4b5563', fontSize: '0.9rem' }}>Stock:</label>
-            <input
-              type="number"
-              id="stock"
-              name="stock"
-              placeholder="Ej: 5"
-              value={formData.stock}
-              onChange={handleChange}
-              required
-              style={{
-                width: '100%',
-                padding: '0.65rem 0.85rem',
-                borderRadius: '8px',
-                border: '1.5px solid #fbcfe8',
-                backgroundColor: '#ffffff',
-                color: '#1f2937',
-                WebkitAppearance: 'none',
-                boxSizing: 'border-box'
-              }}
-            />
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
-            <label htmlFor="image" style={{ fontWeight: 'bold', color: '#4b5563', fontSize: '0.9rem' }}>Imagen:</label>
-            <input
-              type="file"
-              id="image"
-              name="image"
-              accept="image/*"
-              onChange={handleChange}
-              required
-              style={{
-                width: '100%',
-                padding: '0.5rem',
-                fontSize: '0.85rem',
-                borderRadius: '8px',
-                border: '1.5px solid #fbcfe8',
-                backgroundColor: '#fdf2f4',
-                color: '#6b7280',
-                boxSizing: 'border-box'
-              }}
-            />
-          </div>
-
-          <button 
-            type="submit" 
-            disabled={cargando}
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              backgroundColor: '#c2185b',
-              color: '#ffffff',
-              border: 'none',
-              borderRadius: '8px',
-              fontWeight: 'bold',
-              cursor: 'pointer',
-              marginTop: '5px'
-            }}
-          >
-            {cargando ? 'Subiendo imagen a ImgBB...' : 'Guardar Producto'}
-          </button>
-        </form>
-      </div>
-
-      {/* Contenedor de Gestión de Productos */}
-      <div style={{ 
-        maxWidth: '480px', 
-        width: '100%', 
-        margin: '0 auto',
-        backgroundColor: '#fff', 
-        padding: '20px 1.2rem', 
-        borderRadius: '12px', 
-        boxShadow: '0 8px 24px rgba(194, 24, 91, 0.12)',
-        boxSizing: 'border-box',
-        border: '1px solid #fce7f3'
-      }}>
-        <h3 style={{ color: '#831843', marginBottom: '20px', borderBottom: '2px solid #fce7f3', paddingBottom: '10px', fontSize: '1.1rem' }}>
-          📦 Gestionar Productos en la Nube ({productosAdmin.length})
-        </h3>
-
-        {productosAdmin.length === 0 ? (
-          <p style={{ color: '#6b7280', textAlign: 'center', padding: '20px' }}>No hay productos registrados en Firestore todavía.</p>
-        ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            {productosAdmin.map((prod) => (
-              <div key={prod.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#fdf2f8', padding: '12px 10px', borderRadius: '8px', border: '1px solid #fce7f3', flexWrap: 'wrap', gap: '10px', boxSizing: 'border-box' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <img src={prod.img} alt={prod.nombre} style={{ width: '45px', height: '45px', objectFit: 'cover', borderRadius: '6px' }} />
-                  <div>
-                    <h4 style={{ margin: 0, color: '#831843', fontSize: '0.9rem' }}>{prod.nombre}</h4>
-                    <span style={{ color: '#be185d', fontWeight: 'bold', fontSize: '0.85rem' }}>${prod.precio}</span>
-                  </div>
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <label style={{ fontSize: '0.8rem', fontWeight: 'bold', color: '#4b5563' }}>Stock:</label>
-                    <input 
-                      type="number" 
-                      value={prod.stock} 
-                      onChange={(e) => cambiarStock(prod.id, e.target.value)}
-                      style={{ 
-                        width: '50px', 
-                        padding: '4px', 
-                        borderRadius: '4px', 
-                        border: '1px solid #d1d5db', 
-                        textAlign: 'center',
-                        backgroundColor: '#ffffff',
-                        color: '#1f2937',
-                        WebkitAppearance: 'none'
-                      }}
-                      min="0"
-                    />
-                  </div>
-
-                  <button 
-                    onClick={() => eliminarProducto(prod.id)}
-                    style={{ background: '#dc2626', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', fontSize: '0.8rem' }}
-                  >
-                    Eliminar
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
       </div>
     </main>
   );
