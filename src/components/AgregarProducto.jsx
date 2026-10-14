@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase/config';
+import { 
+  collection, 
+  getDocs, 
+  addDoc, 
+  deleteDoc, 
+  doc, 
+  updateDoc 
+} from 'firebase/firestore';
 import './AgregarProducto.css';
 
 function AgregarProducto() {
@@ -16,6 +23,7 @@ function AgregarProducto() {
 
   const [cargando, setCargando] = useState(false);
   const [mensaje, setMensaje] = useState('');
+  const [productosAdmin, setProductosAdmin] = useState([]);
   
   const [user, setUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -27,28 +35,31 @@ function AgregarProducto() {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
 
-      if (currentUser) {
-        try {
-          const docRef = doc(db, 'usuarios', currentUser.uid);
-          const docSnap = await getDoc(docRef);
-
-          if (docSnap.exists() && docSnap.data().rol === 'admin') {
-            setIsAdmin(true);
-          } else {
-            setIsAdmin(false);
-          }
-        } catch (error) {
-          console.error('Error al verificar rol:', error);
-          setIsAdmin(false);
-        }
+      if (currentUser && currentUser.email === 'jael.guerra@gmail.com') {
+        setIsAdmin(true);
+        await cargarProductosFirestore();
       } else {
         setIsAdmin(false);
       }
+      
       setVerificando(false);
     });
 
     return () => unsubscribe();
   }, []);
+
+  const cargarProductosFirestore = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, 'productos'));
+      const prods = querySnapshot.docs.map(documento => ({
+        id: documento.id,
+        ...documento.data()
+      }));
+      setProductosAdmin(prods);
+    } catch (error) {
+      console.error("Error al cargar productos de Firestore:", error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -100,20 +111,23 @@ function AgregarProducto() {
     try {
       const urlImagenServidor = await subirImagenAImgBB(formData.image);
 
-      const productoFinal = {
-        id: Date.now().toString(),
+      const productoNuevo = {
         nombre: formData.name,
         descripcion: formData.description,
         precio: parseFloat(formData.price),
         stock: parseInt(formData.stock),
         img: urlImagenServidor,
-        favorito: false
+        favorito: false,
+        createdAt: Date.now()
       };
 
-      const productosGuardados = JSON.parse(localStorage.getItem('productos_personalizados') || '[]');
-      localStorage.setItem('productos_personalizados', JSON.stringify([...productosGuardados, productoFinal]));
+      // Guardar en la colección 'productos' de Firestore
+      await addDoc(collection(db, 'productos'), productoNuevo);
 
-      setMensaje(`¡El producto "${formData.name}" se guardó correctamente! 🎉`);
+      // Recargar la lista desde la nube
+      await cargarProductosFirestore();
+
+      setMensaje(`¡El producto "${formData.name}" se guardó correctamente en la nube! 🎉`);
 
       setFormData({
         name: '',
@@ -131,6 +145,34 @@ function AgregarProducto() {
       setMensaje(`❌ Error: ${error.message}`);
     } finally {
       setCargando(false);
+    }
+  };
+
+  const eliminarProducto = async (id) => {
+    if (window.confirm('¿Estás seguro de que deseas eliminar este producto de la nube?')) {
+      try {
+        await deleteDoc(doc(db, 'productos', id));
+        await cargarProductosFirestore();
+        setMensaje('🗑️ Producto eliminado correctamente.');
+      } catch (error) {
+        console.error("Error al eliminar:", error);
+        setMensaje('❌ Error al eliminar el producto.');
+      }
+    }
+  };
+
+  const cambiarStock = async (id, nuevoStock) => {
+    const stockNum = parseInt(nuevoStock);
+    if (isNaN(stockNum) || stockNum < 0) return;
+
+    try {
+      const productoRef = doc(db, 'productos', id);
+      await updateDoc(productoRef, { stock: stockNum });
+      
+      // Actualizamos estado localmente para respuesta fluida
+      setProductosAdmin(prev => prev.map(p => p.id === id ? { ...p, stock: stockNum } : p));
+    } catch (error) {
+      console.error("Error al actualizar stock:", error);
     }
   };
 
@@ -168,10 +210,10 @@ function AgregarProducto() {
   }
 
   return (
-    <main className="main-content">
+    <main className="main-content" style={{ paddingBottom: '60px' }}>
       <div className="form-card-container">
         <form onSubmit={handleSubmit} className="crochet-form">
-          <h2>Agregar Nuevo Producto</h2>
+          <h2>Agregar Nuevo Producto (Nube)</h2>
 
           {mensaje && (
             <div style={{
@@ -259,6 +301,50 @@ function AgregarProducto() {
             {cargando ? 'Subiendo imagen a ImgBB...' : 'Guardar Producto'}
           </button>
         </form>
+      </div>
+
+      <div style={{ maxWidth: '800px', margin: '40px auto', background: '#fff', padding: '24px', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
+        <h3 style={{ color: '#831843', marginBottom: '20px', borderBottom: '2px solid #fce7f3', paddingBottom: '10px' }}>
+          📦 Gestionar Productos en la Nube ({productosAdmin.length})
+        </h3>
+
+        {productosAdmin.length === 0 ? (
+          <p style={{ color: '#6b7280', textAlign: 'center', padding: '20px' }}>No hay productos registrados en Firestore todavía.</p>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {productosAdmin.map((prod) => (
+              <div key={prod.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#fdf2f8', padding: '12px 16px', borderRadius: '8px', border: '1px solid #fce7f3', flexWrap: 'wrap', gap: '10px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <img src={prod.img} alt={prod.nombre} style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '6px' }} />
+                  <div>
+                    <h4 style={{ margin: 0, color: '#831843', fontSize: '1rem' }}>{prod.nombre}</h4>
+                    <span style={{ color: '#be185d', fontWeight: 'bold', fontSize: '0.9rem' }}>${prod.precio}</span>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                    <label style={{ fontSize: '0.85rem', fontWeight: 'bold', color: '#4b5563' }}>Stock:</label>
+                    <input 
+                      type="number" 
+                      value={prod.stock} 
+                      onChange={(e) => cambiarStock(prod.id, e.target.value)}
+                      style={{ width: '60px', padding: '4px 8px', borderRadius: '4px', border: '1px solid #d1d5db', textAlign: 'center' }}
+                      min="0"
+                    />
+                  </div>
+
+                  <button 
+                    onClick={() => eliminarProducto(prod.id)}
+                    style={{ background: '#dc2626', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', fontSize: '0.85rem' }}
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </main>
   );

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { auth, db } from '../firebase/config';
-import { doc, getDoc, setDoc } from 'firebase/firestore'; // 👈 Añadimos setDoc
+import { auth } from '../firebase/config';
 import './Navbar.css';
 
 const Navbar = ({ cartCount }) => {
@@ -13,33 +12,17 @@ const Navbar = ({ cartCount }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setCargandoAuth(true);
       setUser(currentUser);
 
-      if (currentUser) {
-        try {
-          const docRef = doc(db, 'usuarios', currentUser.uid);
-          let docSnap = await getDoc(docRef);
-
-          // Si el documento no existe y es tu correo de admin, lo creamos automáticamente
-          if (!docSnap.exists() && currentUser.email === 'jael.guerra@gmail.com') {
-            await setDoc(docRef, { rol: 'admin', email: currentUser.email });
-            docSnap = await getDoc(docRef); // Volvemos a leerlo
-          }
-
-          if (docSnap.exists() && docSnap.data().rol === 'admin') {
-            setIsAdmin(true);
-          } else {
-            setIsAdmin(false);
-          }
-        } catch (error) {
-          console.error('Error al verificar o crear el rol:', error);
-          setIsAdmin(false);
-        }
+      // Verificación directa sin consultas a Firestore (evita error de permisos)
+      if (currentUser && currentUser.email === 'jael.guerra@gmail.com') {
+        setIsAdmin(true);
       } else {
         setIsAdmin(false);
       }
+
       setCargandoAuth(false);
     });
 
@@ -93,7 +76,7 @@ const Navbar = ({ cartCount }) => {
                 <NavLink to="/nosotros" className="nav-link" onClick={handleLinkClick}>Nosotros</NavLink>
               </li>
 
-              {/* Se muestra unicamente si el usuario esta logueado y es admin */}
+              {/* Muestra "Agregar Producto" si el correo es jael.guerra@gmail.com */}
               {!cargandoAuth && user && isAdmin && (
                 <li>
                   <NavLink to="/agregar-producto" className="nav-link" onClick={handleLinkClick}>Agregar Producto</NavLink>

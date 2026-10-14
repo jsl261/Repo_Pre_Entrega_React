@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 export default function Item({ producto }) {
   const [modalAbierto, setModalAbierto] = useState(false);
   
-  // Manejamos la imagen por si viene como 'img' o 'imagen'
-  const imagenSrc = producto.img || producto.imagen || 'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=500&q=80';
+  // Manejamos la imagen por si viene como 'img', 'imagen', 'url' o 'foto'
+  const imagenSrc = producto.img || producto.imagen || producto.url || producto.foto || 'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=500&q=80';
 
   return (
     <>
@@ -19,16 +19,33 @@ export default function Item({ producto }) {
         flexDirection: 'column', 
         height: '100%'
       }}>
-        {/* Imagen con zoom / modal */}
+        {/* Contenedor de la Imagen */}
         <div 
           onClick={() => setModalAbierto(true)}
           title="Haz clic para ver la imagen ampliada"
-          style={{ width: '100%', height: '220px', overflow: 'hidden', backgroundColor: '#f3f4f6', cursor: 'zoom-in', position: 'relative' }}
+          style={{ 
+            width: '100%', 
+            height: '220px', 
+            overflow: 'hidden', 
+            backgroundColor: '#fffaf0', // Fondo muy suave y cálido que se integra perfecto
+            cursor: 'zoom-in', 
+            position: 'relative',
+            borderTopLeftRadius: '12px',
+            borderTopRightRadius: '12px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
         >
           <img 
             src={imagenSrc} 
             alt={producto.nombre} 
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+            style={{ 
+              maxWidth: '100%', 
+              maxHeight: '100%', 
+              objectFit: 'contain', // Muestra la foto completa sin recortar ningún detalle importante
+              display: 'block' 
+            }} 
             onError={(e) => {
               e.target.src = 'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=500&q=80';
             }}
@@ -48,7 +65,7 @@ export default function Item({ producto }) {
           </div>
         </div>
 
-        {/* Detalles en tarjeta */}
+        {/* Detalles en la tarjeta */}
         <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
           <h3 style={{ fontWeight: 'bold', fontSize: '1.125rem', color: '#831843', marginBottom: '8px' }}>
             {producto.nombre || 'Sin nombre'}

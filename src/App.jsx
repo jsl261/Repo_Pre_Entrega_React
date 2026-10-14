@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import ItemListContainer from './views/ItemListContainer';
-import ItemDetail from './views/ItemDetail';
+import ItemDetailContainer from './views/ItemDetailContainer'; // 👈 Importamos el Container
 import About from './components/About';
 import Cart from './views/Cart';
 import Footer from './components/Footer';
@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/productos" element={<ItemListContainer />} />
-          <Route path="/item/:id" element={<ItemDetail />} />
+          <Route path="/producto/:id" element={<ItemDetailContainer />} /> {/* 👈 Usamos ItemDetailContainer aquí */}
           <Route path="/nosotros" element={<About />} />
           <Route path="/carrito" element={<Cart />} />
           <Route path="/agregar-producto" element={<AgregarProducto />} />
