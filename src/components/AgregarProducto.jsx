@@ -263,7 +263,6 @@ function AgregarProducto() {
                 backgroundColor: '#ffffff',
                 color: '#1f2937',
                 WebkitAppearance: 'none',
-                appearance: 'none',
                 boxSizing: 'border-box'
               }}
             />
@@ -288,7 +287,6 @@ function AgregarProducto() {
                 backgroundColor: '#ffffff', 
                 color: '#1f2937',
                 WebkitAppearance: 'none',
-                appearance: 'none',
                 boxSizing: 'border-box'
               }}
               required
@@ -314,7 +312,6 @@ function AgregarProducto() {
                 backgroundColor: '#ffffff',
                 color: '#1f2937',
                 WebkitAppearance: 'none',
-                appearance: 'none',
                 boxSizing: 'border-box'
               }}
             />
@@ -338,7 +335,6 @@ function AgregarProducto() {
                 backgroundColor: '#ffffff',
                 color: '#1f2937',
                 WebkitAppearance: 'none',
-                appearance: 'none',
                 boxSizing: 'border-box'
               }}
             />
@@ -431,8 +427,7 @@ function AgregarProducto() {
                         textAlign: 'center',
                         backgroundColor: '#ffffff',
                         color: '#1f2937',
-                        WebkitAppearance: 'none',
-                        appearance: 'none'
+                        WebkitAppearance: 'none'
                       }}
                       min="0"
                     />
