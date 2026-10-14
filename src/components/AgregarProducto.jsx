@@ -210,19 +210,22 @@ function AgregarProducto() {
       display: 'flex', 
       flexDirection: 'column', 
       alignItems: 'center', 
-      padding: '30px 15px 80px 15px', 
+      justifyContent: 'flex-start',
+      padding: '20px 10px 80px 10px', 
       width: '100%', 
+      maxWidth: '100vw',
       boxSizing: 'border-box',
       backgroundColor: '#fdf2f4',
-      minHeight: '100%',
-      overflowY: 'auto'
+      minHeight: '100vh',
+      overflowX: 'hidden'
     }}>
+      {/* Contenedor del Formulario */}
       <div className="form-card-container" style={{ 
         width: '100%', 
         maxWidth: '480px', 
-        margin: '0 auto',
+        marginBottom: '25px',
         backgroundColor: '#ffffff',
-        padding: '2rem 1.5rem',
+        padding: '2rem 1.2rem',
         borderRadius: '12px',
         boxShadow: '0 8px 24px rgba(194, 24, 91, 0.12)',
         boxSizing: 'border-box',
@@ -374,15 +377,16 @@ function AgregarProducto() {
         </form>
       </div>
 
+      {/* Contenedor de Gestión de Productos */}
       <div style={{ 
         maxWidth: '480px', 
         width: '100%', 
-        margin: '30px auto 0 auto', 
-        background: '#fff', 
-        padding: '20px 16px', 
+        backgroundColor: '#fff', 
+        padding: '20px 1.2rem', 
         borderRadius: '12px', 
-        boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
-        boxSizing: 'border-box'
+        boxShadow: '0 8px 24px rgba(194, 24, 91, 0.12)',
+        boxSizing: 'border-box',
+        border: '1px solid #fce7f3'
       }}>
         <h3 style={{ color: '#831843', marginBottom: '20px', borderBottom: '2px solid #fce7f3', paddingBottom: '10px', fontSize: '1.1rem' }}>
           📦 Gestionar Productos en la Nube ({productosAdmin.length})
@@ -393,7 +397,7 @@ function AgregarProducto() {
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {productosAdmin.map((prod) => (
-              <div key={prod.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#fdf2f8', padding: '12px 10px', borderRadius: '8px', border: '1px solid #fce7f3', flexWrap: 'wrap', gap: '10px' }}>
+              <div key={prod.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#fdf2f8', padding: '12px 10px', borderRadius: '8px', border: '1px solid #fce7f3', flexWrap: 'wrap', gap: '10px', boxSizing: 'border-box' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <img src={prod.img} alt={prod.nombre} style={{ width: '45px', height: '45px', objectFit: 'cover', borderRadius: '6px' }} />
                   <div>

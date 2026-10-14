@@ -9,6 +9,7 @@ body {
   background-color: #F9F6F0;
   font-family: system-ui, -apple-system, sans-serif;
   color: #333333;
+  overflow-x: hidden; /* Evita cualquier desplazamiento horizontal no deseado */
 }
 
 /* Contenedor principal de la aplicación */
@@ -17,4 +18,12 @@ body {
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column; /* Forzamos que los hijos (Navbar, vistas, Footer) se apilen verticalmente */
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
 }
