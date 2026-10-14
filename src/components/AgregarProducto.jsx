@@ -32,6 +32,19 @@ function AgregarProducto() {
 
   const navigate = useNavigate();
 
+  const cargarProductosFirestore = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, 'productos'));
+      const prods = querySnapshot.docs.map(documento => ({
+        id: documento.id,
+        ...documento.data()
+      }));
+      setProductosAdmin(prods);
+    } catch (error) {
+      console.error("Error al cargar productos de Firestore:", error);
+    }
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
@@ -49,25 +62,12 @@ function AgregarProducto() {
     return () => unsubscribe();
   }, []);
 
-  const cargarProductosFirestore = async () => {
-    try {
-      const querySnapshot = await getDocs(collection(db, 'productos'));
-      const prods = querySnapshot.docs.map(documento => ({
-        id: documento.id,
-        ...documento.data()
-      }));
-      setProductosAdmin(prods);
-    } catch (error) {
-      console.error("Error al cargar productos de Firestore:", error);
-    }
-  };
-
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: files ? files[0] : value
-    });
+    }));
   };
 
   const subirImagenAImgBB = async (file) => {
@@ -116,7 +116,7 @@ function AgregarProducto() {
         nombre: formData.name,
         descripcion: formData.description,
         precio: parseFloat(formData.price),
-        stock: parseInt(formData.stock),
+        stock: parseInt(formData.stock, 10),
         img: urlImagenServidor,
         favorito: false,
         createdAt: Date.now()
@@ -160,7 +160,7 @@ function AgregarProducto() {
   };
 
   const cambiarStock = async (id, nuevoStock) => {
-    const stockNum = parseInt(nuevoStock);
+    const stockNum = parseInt(nuevoStock, 10);
     if (isNaN(stockNum) || stockNum < 0) return;
 
     try {
@@ -187,6 +187,7 @@ function AgregarProducto() {
           <h2 style={{ color: '#78281F', marginBottom: '15px' }}>Acceso Restringido 🔒</h2>
           <p style={{ color: '#555', marginBottom: '20px' }}>Esta sección es exclusiva para el administrador del sitio.</p>
           <button 
+            type="button"
             onClick={() => navigate('/login')}
             className="btn-guardar-prod"
           >
@@ -337,6 +338,7 @@ function AgregarProducto() {
                     </div>
 
                     <button 
+                      type="button"
                       onClick={() => eliminarProducto(prod.id)}
                       style={{ background: '#dc2626', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', fontSize: '0.8rem' }}
                     >
