@@ -11,7 +11,7 @@ import {
   doc, 
   updateDoc 
 } from 'firebase/firestore';
-import './AgregarProducto.css';
+// NOTA: Eliminamos la importación de './AgregarProducto.css' para evitar conflictos de diseño.
 
 function AgregarProducto() {
   const [formData, setFormData] = useState({
@@ -174,7 +174,7 @@ function AgregarProducto() {
 
   if (verificando) {
     return (
-      <main className="main-content" style={{ textAlign: 'center', padding: '60px' }}>
+      <main style={{ textAlign: 'center', padding: '60px', width: '100%', boxSizing: 'border-box' }}>
         <h3>Verificando permisos de administrador... ⏳</h3>
       </main>
     );
@@ -182,7 +182,7 @@ function AgregarProducto() {
 
   if (!user || !isAdmin) {
     return (
-      <main className="main-content" style={{ textAlign: 'center', padding: '60px' }}>
+      <main style={{ textAlign: 'center', padding: '60px', width: '100%', boxSizing: 'border-box' }}>
         <div style={{ background: '#fff', padding: '40px', borderRadius: '12px', maxWidth: '400px', margin: '0 auto', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
           <h2 style={{ color: '#78281F', marginBottom: '15px' }}>Acceso Restringido 🔒</h2>
           <p style={{ color: '#555', marginBottom: '20px' }}>Esta sección es exclusiva para el administrador del sitio. Inicia sesión con la cuenta correcta.</p>
@@ -206,21 +206,20 @@ function AgregarProducto() {
   }
 
   return (
-    <main className="main-content" style={{ 
+    <main style={{ 
       display: 'flex', 
       flexDirection: 'column', 
       alignItems: 'center', 
       justifyContent: 'flex-start',
       padding: '20px 10px 80px 10px', 
       width: '100%', 
-      maxWidth: '100vw',
       boxSizing: 'border-box',
       backgroundColor: '#fdf2f4',
       minHeight: '100vh',
       overflowX: 'hidden'
     }}>
       {/* Contenedor del Formulario */}
-      <div className="form-card-container" style={{ 
+      <div style={{ 
         width: '100%', 
         maxWidth: '480px', 
         marginBottom: '25px',
@@ -231,13 +230,12 @@ function AgregarProducto() {
         boxSizing: 'border-box',
         border: '1px solid #fce7f3'
       }}>
-        <form onSubmit={handleSubmit} className="crochet-form">
-          <h2>Agregar Nuevo Producto (Nube)</h2>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px', width: '100%' }}>
+          <h2 style={{ color: '#831843', fontSize: '1.25rem', marginBottom: '5px' }}>Agregar Nuevo Producto (Nube)</h2>
 
           {mensaje && (
             <div style={{
               padding: '10px',
-              marginBottom: '15px',
               borderRadius: '8px',
               background: mensaje.includes('❌') ? '#FADBD8' : '#D4EFDF',
               color: mensaje.includes('❌') ? '#78281F' : '#145A32',
@@ -249,8 +247,8 @@ function AgregarProducto() {
             </div>
           )}
 
-          <div className="form-group">
-            <label htmlFor="name">Nombre del Producto:</label>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
+            <label htmlFor="name" style={{ fontWeight: 'bold', color: '#4b5563', fontSize: '0.9rem' }}>Nombre del Producto:</label>
             <input
               type="text"
               id="name"
@@ -274,8 +272,8 @@ function AgregarProducto() {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="description">Descripción:</label>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
+            <label htmlFor="description" style={{ fontWeight: 'bold', color: '#4b5563', fontSize: '0.9rem' }}>Descripción:</label>
             <textarea
               id="description"
               name="description"
@@ -300,8 +298,8 @@ function AgregarProducto() {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="price">Precio:</label>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
+            <label htmlFor="price" style={{ fontWeight: 'bold', color: '#4b5563', fontSize: '0.9rem' }}>Precio:</label>
             <input
               type="number"
               id="price"
@@ -325,8 +323,8 @@ function AgregarProducto() {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="stock">Stock:</label>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
+            <label htmlFor="stock" style={{ fontWeight: 'bold', color: '#4b5563', fontSize: '0.9rem' }}>Stock:</label>
             <input
               type="number"
               id="stock"
@@ -349,8 +347,8 @@ function AgregarProducto() {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="image">Imagen:</label>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
+            <label htmlFor="image" style={{ fontWeight: 'bold', color: '#4b5563', fontSize: '0.9rem' }}>Imagen:</label>
             <input
               type="file"
               id="image"
@@ -371,7 +369,21 @@ function AgregarProducto() {
             />
           </div>
 
-          <button type="submit" className="save-btn" disabled={cargando}>
+          <button 
+            type="submit" 
+            disabled={cargando}
+            style={{
+              width: '100%',
+              padding: '0.75rem',
+              backgroundColor: '#c2185b',
+              color: '#ffffff',
+              border: 'none',
+              borderRadius: '8px',
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              marginTop: '5px'
+            }}
+          >
             {cargando ? 'Subiendo imagen a ImgBB...' : 'Guardar Producto'}
           </button>
         </form>
