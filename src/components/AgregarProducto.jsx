@@ -1,3 +1,4 @@
+// src/components/AgregarProducto.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -253,7 +254,7 @@ function AgregarProducto() {
               value={formData.description}
               onChange={handleChange}
               rows="3"
-              style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #E2D2C5', resize: 'vertical', fontFamily: 'inherit' }}
+              style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #E2D2C5', resize: 'vertical', fontFamily: 'inherit', backgroundColor: '#ffffff', color: '#1f2937' }}
               required
             />
           </div>
@@ -267,87 +268,4 @@ function AgregarProducto() {
               placeholder="Ej: 9500"
               step="0.01"
               value={formData.price}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="stock">Stock:</label>
-            <input
-              type="number"
-              id="stock"
-              name="stock"
-              placeholder="Ej: 5"
-              value={formData.stock}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="image">Imagen:</label>
-            <input
-              type="file"
-              id="image"
-              name="image"
-              accept="image/*"
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <button type="submit" className="save-btn" disabled={cargando}>
-            {cargando ? 'Subiendo imagen a ImgBB...' : 'Guardar Producto'}
-          </button>
-        </form>
-      </div>
-
-      <div style={{ maxWidth: '800px', margin: '40px auto', background: '#fff', padding: '24px', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
-        <h3 style={{ color: '#831843', marginBottom: '20px', borderBottom: '2px solid #fce7f3', paddingBottom: '10px' }}>
-          📦 Gestionar Productos en la Nube ({productosAdmin.length})
-        </h3>
-
-        {productosAdmin.length === 0 ? (
-          <p style={{ color: '#6b7280', textAlign: 'center', padding: '20px' }}>No hay productos registrados en Firestore todavía.</p>
-        ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            {productosAdmin.map((prod) => (
-              <div key={prod.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#fdf2f8', padding: '12px 16px', borderRadius: '8px', border: '1px solid #fce7f3', flexWrap: 'wrap', gap: '10px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <img src={prod.img} alt={prod.nombre} style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '6px' }} />
-                  <div>
-                    <h4 style={{ margin: 0, color: '#831843', fontSize: '1rem' }}>{prod.nombre}</h4>
-                    <span style={{ color: '#be185d', fontWeight: 'bold', fontSize: '0.9rem' }}>${prod.precio}</span>
-                  </div>
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                    <label style={{ fontSize: '0.85rem', fontWeight: 'bold', color: '#4b5563' }}>Stock:</label>
-                    <input 
-                      type="number" 
-                      value={prod.stock} 
-                      onChange={(e) => cambiarStock(prod.id, e.target.value)}
-                      style={{ width: '60px', padding: '4px 8px', borderRadius: '4px', border: '1px solid #d1d5db', textAlign: 'center' }}
-                      min="0"
-                    />
-                  </div>
-
-                  <button 
-                    onClick={() => eliminarProducto(prod.id)}
-                    style={{ background: '#dc2626', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', fontSize: '0.85rem' }}
-                  >
-                    Eliminar
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </main>
-  );
-}
-
-export default AgregarProducto;
+              onChange={
