@@ -11,6 +11,7 @@ import {
   doc, 
   updateDoc 
 } from 'firebase/firestore';
+import './AgregarProducto.css';
 
 function AgregarProducto() {
   const [formData, setFormData] = useState({
@@ -173,7 +174,7 @@ function AgregarProducto() {
 
   if (verificando) {
     return (
-      <main style={{ textAlign: 'center', padding: '60px', width: '100%', boxSizing: 'border-box' }}>
+      <main className="agregar-producto-main" style={{ textAlign: 'center', padding: '60px' }}>
         <h3>Verificando permisos de administrador... ⏳</h3>
       </main>
     );
@@ -181,7 +182,7 @@ function AgregarProducto() {
 
   if (!user || !isAdmin) {
     return (
-      <main style={{ textAlign: 'center', padding: '60px', width: '100%', boxSizing: 'border-box' }}>
+      <main className="agregar-producto-main" style={{ textAlign: 'center', padding: '60px' }}>
         <div style={{ background: '#fff', padding: '40px', borderRadius: '12px', maxWidth: '400px', margin: '0 auto', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
           <h2 style={{ color: '#78281F', marginBottom: '15px' }}>Acceso Restringido 🔒</h2>
           <p style={{ color: '#555', marginBottom: '20px' }}>Esta sección es exclusiva para el administrador del sitio. Inicia sesión con la cuenta correcta.</p>
@@ -205,39 +206,11 @@ function AgregarProducto() {
   }
 
   return (
-    <main style={{ 
-      display: 'flex', 
-      flexDirection: 'column',
-      alignItems: 'center',
-      width: '100%', 
-      maxWidth: '100vw',
-      padding: '20px 15px 80px 15px', 
-      boxSizing: 'border-box',
-      backgroundColor: '#fdf2f4',
-      minHeight: '100vh',
-      overflowX: 'hidden'
-    }}>
-      {/* Contenedor unificado para centrar y apilar en columna */}
-      <div style={{ 
-        display: 'flex', 
-        flexDirection: 'column', 
-        alignItems: 'center', 
-        width: '100%', 
-        maxWidth: '480px', 
-        gap: '25px',
-        boxSizing: 'border-box'
-      }}>
+    <main className="agregar-producto-main">
+      <div className="agregar-producto-content">
         
         {/* Formulario */}
-        <div style={{ 
-          width: '100%', 
-          backgroundColor: '#ffffff',
-          padding: '2rem 1.2rem',
-          borderRadius: '12px',
-          boxShadow: '0 8px 24px rgba(194, 24, 91, 0.12)',
-          boxSizing: 'border-box',
-          border: '1px solid #fce7f3'
-        }}>
+        <div className="form-card-box">
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px', width: '100%' }}>
             <h2 style={{ color: '#831843', fontSize: '1.25rem', marginBottom: '5px' }}>Agregar Nuevo Producto (Nube)</h2>
 
@@ -266,16 +239,6 @@ function AgregarProducto() {
                 onChange={handleChange}
                 required
                 autoComplete="off"
-                style={{
-                  width: '100%',
-                  padding: '0.65rem 0.85rem',
-                  borderRadius: '8px',
-                  border: '1.5px solid #fbcfe8',
-                  backgroundColor: '#ffffff',
-                  color: '#1f2937',
-                  WebkitAppearance: 'none',
-                  boxSizing: 'border-box'
-                }}
               />
             </div>
 
@@ -288,18 +251,6 @@ function AgregarProducto() {
                 value={formData.description}
                 onChange={handleChange}
                 rows="3"
-                style={{ 
-                  width: '100%', 
-                  padding: '10px', 
-                  borderRadius: '8px', 
-                  border: '1.5px solid #fbcfe8', 
-                  resize: 'vertical', 
-                  fontFamily: 'inherit', 
-                  backgroundColor: '#ffffff', 
-                  color: '#1f2937',
-                  WebkitAppearance: 'none',
-                  boxSizing: 'border-box'
-                }}
                 required
               />
             </div>
@@ -315,16 +266,6 @@ function AgregarProducto() {
                 value={formData.price}
                 onChange={handleChange}
                 required
-                style={{
-                  width: '100%',
-                  padding: '0.65rem 0.85rem',
-                  borderRadius: '8px',
-                  border: '1.5px solid #fbcfe8',
-                  backgroundColor: '#ffffff',
-                  color: '#1f2937',
-                  WebkitAppearance: 'none',
-                  boxSizing: 'border-box'
-                }}
               />
             </div>
 
@@ -338,16 +279,6 @@ function AgregarProducto() {
                 value={formData.stock}
                 onChange={handleChange}
                 required
-                style={{
-                  width: '100%',
-                  padding: '0.65rem 0.85rem',
-                  borderRadius: '8px',
-                  border: '1.5px solid #fbcfe8',
-                  backgroundColor: '#ffffff',
-                  color: '#1f2937',
-                  WebkitAppearance: 'none',
-                  boxSizing: 'border-box'
-                }}
               />
             </div>
 
@@ -393,16 +324,8 @@ function AgregarProducto() {
           </form>
         </div>
 
-        {/* Contenedor de Gestión de Productos */}
-        <div style={{ 
-          width: '100%', 
-          backgroundColor: '#fff', 
-          padding: '20px 1.2rem', 
-          borderRadius: '12px', 
-          boxShadow: '0 8px 24px rgba(194, 24, 91, 0.12)',
-          boxSizing: 'border-box',
-          border: '1px solid #fce7f3'
-        }}>
+        {/* Tarjeta de Gestión de Productos */}
+        <div className="gestionar-productos-box">
           <h3 style={{ color: '#831843', marginBottom: '20px', borderBottom: '2px solid #fce7f3', paddingBottom: '10px', fontSize: '1.1rem' }}>
             📦 Gestionar Productos en la Nube ({productosAdmin.length})
           </h3>
